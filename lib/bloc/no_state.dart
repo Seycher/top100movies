@@ -1,0 +1,3 @@
+class NoState {
+  const NoState();
+}
