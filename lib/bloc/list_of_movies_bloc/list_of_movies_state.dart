@@ -9,6 +9,6 @@ class InitialListOfMoviesState extends ListOfMoviesState {
   const InitialListOfMoviesState();
 }
 
-class ReloadedListOfMovieState extends ListOfMoviesState {
-  const ReloadedListOfMovieState();
+class MoviesAvailableState extends ListOfMoviesState {
+  const MoviesAvailableState();
 }

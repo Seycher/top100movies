@@ -22,6 +22,6 @@ class ListOfMoviesBloc extends Bloc<ListOfMoviesEvent, ListOfMoviesState> {
     ScratchTheMovieEvent event,
   ) async {
     // TODO: logika zdrapywania filmu
-    return ReloadedListOfMovieState();
+    return MoviesAvailableState();
   }
 }
