@@ -1,6 +1,14 @@
 import 'package:meta/meta.dart';
 
 @immutable
-abstract class ListOfMoviesState {}
+abstract class ListOfMoviesState {
+  const ListOfMoviesState();
+}
 
-class InitialListOfMoviesState extends ListOfMoviesState {}
+class InitialListOfMoviesState extends ListOfMoviesState {
+  const InitialListOfMoviesState();
+}
+
+class MoviesAvailableState extends ListOfMoviesState {
+  const MoviesAvailableState();
+}

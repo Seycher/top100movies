@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 
 import 'list_of_movies_event.dart';
@@ -12,6 +13,15 @@ class ListOfMoviesBloc extends Bloc<ListOfMoviesEvent, ListOfMoviesState> {
   Stream<ListOfMoviesState> mapEventToState(
     ListOfMoviesEvent event,
   ) async* {
-    // TODO: Add Logic
+    if (event is ScratchTheMovieEvent) {
+      await _scratchTheMovie(event);
+    }
+  }
+
+  Future<ListOfMoviesState> _scratchTheMovie(
+    ScratchTheMovieEvent event,
+  ) async {
+    // TODO: logika zdrapywania filmu
+    return MoviesAvailableState();
   }
 }
