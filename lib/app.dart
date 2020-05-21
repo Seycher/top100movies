@@ -1,20 +1,21 @@
-import 'package:applaca/bloc/list_of_movies_bloc/list_of_movies_bloc.dart';
-import 'package:applaca/ui/pages/list_of_movies/screen.dart';
-import 'package:applaca/ui/routes.dart';
+import 'package:applaca/home.dart';
+import 'package:applaca/model/test_repo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MyApp extends StatelessWidget {
+class Application extends StatelessWidget {
+  static final GlobalKey<NavigatorState> navigator =
+      GlobalKey<NavigatorState>();
+  static final TestRepo testRepo = TestRepo();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: kPageListOfMoviesPage,
-      routes: {
-        kPageListOfMoviesPage: (context) => BlocProvider(
-              create: (context) => ListOfMoviesBloc(),
-              child: ListOfMovies(),
-            ),
-      },
+      title: 'top100',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      navigatorKey: Application.navigator,
+      home: Home(),
     );
   }
 }
