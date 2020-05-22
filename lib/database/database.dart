@@ -8,10 +8,11 @@ part 'database.g.dart';
 @UseMoor(tables: [MoorMovies], daos: [MovieDao])
 class Database extends _$Database {
   Database()
-      : super(FlutterQueryExecutor.inDatabaseFolder(
-            path: ('db.sqlite'), logStatements: true));
+      : super(
+          FlutterQueryExecutor.inDatabaseFolder(
+              path: ('db.sqlite'), logStatements: true),
+        );
 
   @override
   int get schemaVersion => 1;
 }
-

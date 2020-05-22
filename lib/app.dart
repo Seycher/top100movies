@@ -1,11 +1,13 @@
+import 'package:applaca/database/database.dart';
+import 'package:applaca/database/movie/movie_dao.dart';
 import 'package:applaca/home.dart';
-import 'package:applaca/model/test_repo.dart';
+import 'package:applaca/repository/movie_repository.dart';
 import 'package:flutter/material.dart';
 
 class Application extends StatelessWidget {
-  static final GlobalKey<NavigatorState> navigator =
-      GlobalKey<NavigatorState>();
-  static final TestRepo testRepo = TestRepo();
+  static final _database = Database();
+  static final navigator = GlobalKey<NavigatorState>();
+  static final movieRepository = MovieRepository(MovieDao(_database));
 
   @override
   Widget build(BuildContext context) {

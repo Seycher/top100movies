@@ -18,17 +18,38 @@ class MovieRepository {
   Future<void> scratchMovie(
     final String title,
     final bool isScratched,
+    final DateTime watchedTime,
   ) async {
-    return await _dao.updateMovie(title, isScratched);
+    return await _dao.updateMovie(
+      MoorMoviesCompanion(
+        title: Value(title),
+        isScratched: Value(isScratched),
+        watchedDate: Value(watchedTime),
+      ),
+    );
   }
 
   Future<void> addMovie(
     final String title,
+    final int year,
+    final String category,
+    final String director,
+    final int duration,
+    final String plot,
+    final String encouragement,
     final String posterUrl,
+    final String rewordUrl,
   ) async {
     return await _dao.insertMovie(MoorMoviesCompanion(
       title: Value(title),
+      year: Value(year),
+      category: Value(category),
+      director: Value(director),
+      duration: Value(duration),
+      plot: Value(plot),
+      encouragement: Value(encouragement),
       posterUrl: Value(posterUrl),
+      rewordUrl: Value(rewordUrl),
     ));
   }
 }

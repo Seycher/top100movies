@@ -10,25 +10,56 @@ part of 'database.dart';
 class MoorMovie extends DataClass implements Insertable<MoorMovie> {
   final int id;
   final String title;
+  final int year;
+  final String category;
+  final String director;
+  final int duration;
+  final String plot;
+  final String encouragement;
+  final DateTime watchedDate;
   final String posterUrl;
+  final String rewordUrl;
   final bool isScratched;
   MoorMovie(
       {@required this.id,
       @required this.title,
+      @required this.year,
+      @required this.category,
+      @required this.director,
+      @required this.duration,
+      @required this.plot,
+      @required this.encouragement,
+      this.watchedDate,
       @required this.posterUrl,
+      @required this.rewordUrl,
       @required this.isScratched});
   factory MoorMovie.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
     final boolType = db.typeSystem.forDartType<bool>();
     return MoorMovie(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       title:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}title']),
+      year: intType.mapFromDatabaseResponse(data['${effectivePrefix}year']),
+      category: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}category']),
+      director: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}director']),
+      duration:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}duration']),
+      plot: stringType.mapFromDatabaseResponse(data['${effectivePrefix}plot']),
+      encouragement: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}encouragement']),
+      watchedDate: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}watched_date']),
       posterUrl: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}poster_url']),
+      rewordUrl: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}reword_url']),
       isScratched: boolType
           .mapFromDatabaseResponse(data['${effectivePrefix}is_scratched']),
     );
@@ -42,8 +73,32 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
     if (!nullToAbsent || title != null) {
       map['title'] = Variable<String>(title);
     }
+    if (!nullToAbsent || year != null) {
+      map['year'] = Variable<int>(year);
+    }
+    if (!nullToAbsent || category != null) {
+      map['category'] = Variable<String>(category);
+    }
+    if (!nullToAbsent || director != null) {
+      map['director'] = Variable<String>(director);
+    }
+    if (!nullToAbsent || duration != null) {
+      map['duration'] = Variable<int>(duration);
+    }
+    if (!nullToAbsent || plot != null) {
+      map['plot'] = Variable<String>(plot);
+    }
+    if (!nullToAbsent || encouragement != null) {
+      map['encouragement'] = Variable<String>(encouragement);
+    }
+    if (!nullToAbsent || watchedDate != null) {
+      map['watched_date'] = Variable<DateTime>(watchedDate);
+    }
     if (!nullToAbsent || posterUrl != null) {
       map['poster_url'] = Variable<String>(posterUrl);
+    }
+    if (!nullToAbsent || rewordUrl != null) {
+      map['reword_url'] = Variable<String>(rewordUrl);
     }
     if (!nullToAbsent || isScratched != null) {
       map['is_scratched'] = Variable<bool>(isScratched);
@@ -56,9 +111,29 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
       id: id == null && nullToAbsent ? const Value.absent() : Value(id),
       title:
           title == null && nullToAbsent ? const Value.absent() : Value(title),
+      year: year == null && nullToAbsent ? const Value.absent() : Value(year),
+      category: category == null && nullToAbsent
+          ? const Value.absent()
+          : Value(category),
+      director: director == null && nullToAbsent
+          ? const Value.absent()
+          : Value(director),
+      duration: duration == null && nullToAbsent
+          ? const Value.absent()
+          : Value(duration),
+      plot: plot == null && nullToAbsent ? const Value.absent() : Value(plot),
+      encouragement: encouragement == null && nullToAbsent
+          ? const Value.absent()
+          : Value(encouragement),
+      watchedDate: watchedDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(watchedDate),
       posterUrl: posterUrl == null && nullToAbsent
           ? const Value.absent()
           : Value(posterUrl),
+      rewordUrl: rewordUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(rewordUrl),
       isScratched: isScratched == null && nullToAbsent
           ? const Value.absent()
           : Value(isScratched),
@@ -71,7 +146,15 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
     return MoorMovie(
       id: serializer.fromJson<int>(json['id']),
       title: serializer.fromJson<String>(json['title']),
+      year: serializer.fromJson<int>(json['year']),
+      category: serializer.fromJson<String>(json['category']),
+      director: serializer.fromJson<String>(json['director']),
+      duration: serializer.fromJson<int>(json['duration']),
+      plot: serializer.fromJson<String>(json['plot']),
+      encouragement: serializer.fromJson<String>(json['encouragement']),
+      watchedDate: serializer.fromJson<DateTime>(json['watchedDate']),
       posterUrl: serializer.fromJson<String>(json['posterUrl']),
+      rewordUrl: serializer.fromJson<String>(json['rewordUrl']),
       isScratched: serializer.fromJson<bool>(json['isScratched']),
     );
   }
@@ -81,17 +164,44 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'title': serializer.toJson<String>(title),
+      'year': serializer.toJson<int>(year),
+      'category': serializer.toJson<String>(category),
+      'director': serializer.toJson<String>(director),
+      'duration': serializer.toJson<int>(duration),
+      'plot': serializer.toJson<String>(plot),
+      'encouragement': serializer.toJson<String>(encouragement),
+      'watchedDate': serializer.toJson<DateTime>(watchedDate),
       'posterUrl': serializer.toJson<String>(posterUrl),
+      'rewordUrl': serializer.toJson<String>(rewordUrl),
       'isScratched': serializer.toJson<bool>(isScratched),
     };
   }
 
   MoorMovie copyWith(
-          {int id, String title, String posterUrl, bool isScratched}) =>
+          {int id,
+          String title,
+          int year,
+          String category,
+          String director,
+          int duration,
+          String plot,
+          String encouragement,
+          DateTime watchedDate,
+          String posterUrl,
+          String rewordUrl,
+          bool isScratched}) =>
       MoorMovie(
         id: id ?? this.id,
         title: title ?? this.title,
+        year: year ?? this.year,
+        category: category ?? this.category,
+        director: director ?? this.director,
+        duration: duration ?? this.duration,
+        plot: plot ?? this.plot,
+        encouragement: encouragement ?? this.encouragement,
+        watchedDate: watchedDate ?? this.watchedDate,
         posterUrl: posterUrl ?? this.posterUrl,
+        rewordUrl: rewordUrl ?? this.rewordUrl,
         isScratched: isScratched ?? this.isScratched,
       );
   @override
@@ -99,52 +209,134 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
     return (StringBuffer('MoorMovie(')
           ..write('id: $id, ')
           ..write('title: $title, ')
+          ..write('year: $year, ')
+          ..write('category: $category, ')
+          ..write('director: $director, ')
+          ..write('duration: $duration, ')
+          ..write('plot: $plot, ')
+          ..write('encouragement: $encouragement, ')
+          ..write('watchedDate: $watchedDate, ')
           ..write('posterUrl: $posterUrl, ')
+          ..write('rewordUrl: $rewordUrl, ')
           ..write('isScratched: $isScratched')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => $mrjf($mrjc(id.hashCode,
-      $mrjc(title.hashCode, $mrjc(posterUrl.hashCode, isScratched.hashCode))));
+  int get hashCode => $mrjf($mrjc(
+      id.hashCode,
+      $mrjc(
+          title.hashCode,
+          $mrjc(
+              year.hashCode,
+              $mrjc(
+                  category.hashCode,
+                  $mrjc(
+                      director.hashCode,
+                      $mrjc(
+                          duration.hashCode,
+                          $mrjc(
+                              plot.hashCode,
+                              $mrjc(
+                                  encouragement.hashCode,
+                                  $mrjc(
+                                      watchedDate.hashCode,
+                                      $mrjc(
+                                          posterUrl.hashCode,
+                                          $mrjc(rewordUrl.hashCode,
+                                              isScratched.hashCode))))))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is MoorMovie &&
           other.id == this.id &&
           other.title == this.title &&
+          other.year == this.year &&
+          other.category == this.category &&
+          other.director == this.director &&
+          other.duration == this.duration &&
+          other.plot == this.plot &&
+          other.encouragement == this.encouragement &&
+          other.watchedDate == this.watchedDate &&
           other.posterUrl == this.posterUrl &&
+          other.rewordUrl == this.rewordUrl &&
           other.isScratched == this.isScratched);
 }
 
 class MoorMoviesCompanion extends UpdateCompanion<MoorMovie> {
   final Value<int> id;
   final Value<String> title;
+  final Value<int> year;
+  final Value<String> category;
+  final Value<String> director;
+  final Value<int> duration;
+  final Value<String> plot;
+  final Value<String> encouragement;
+  final Value<DateTime> watchedDate;
   final Value<String> posterUrl;
+  final Value<String> rewordUrl;
   final Value<bool> isScratched;
   const MoorMoviesCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
+    this.year = const Value.absent(),
+    this.category = const Value.absent(),
+    this.director = const Value.absent(),
+    this.duration = const Value.absent(),
+    this.plot = const Value.absent(),
+    this.encouragement = const Value.absent(),
+    this.watchedDate = const Value.absent(),
     this.posterUrl = const Value.absent(),
+    this.rewordUrl = const Value.absent(),
     this.isScratched = const Value.absent(),
   });
   MoorMoviesCompanion.insert({
     this.id = const Value.absent(),
     @required String title,
+    @required int year,
+    @required String category,
+    @required String director,
+    @required int duration,
+    @required String plot,
+    @required String encouragement,
+    this.watchedDate = const Value.absent(),
     this.posterUrl = const Value.absent(),
+    this.rewordUrl = const Value.absent(),
     this.isScratched = const Value.absent(),
-  }) : title = Value(title);
+  })  : title = Value(title),
+        year = Value(year),
+        category = Value(category),
+        director = Value(director),
+        duration = Value(duration),
+        plot = Value(plot),
+        encouragement = Value(encouragement);
   static Insertable<MoorMovie> custom({
     Expression<int> id,
     Expression<String> title,
+    Expression<int> year,
+    Expression<String> category,
+    Expression<String> director,
+    Expression<int> duration,
+    Expression<String> plot,
+    Expression<String> encouragement,
+    Expression<DateTime> watchedDate,
     Expression<String> posterUrl,
+    Expression<String> rewordUrl,
     Expression<bool> isScratched,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (title != null) 'title': title,
+      if (year != null) 'year': year,
+      if (category != null) 'category': category,
+      if (director != null) 'director': director,
+      if (duration != null) 'duration': duration,
+      if (plot != null) 'plot': plot,
+      if (encouragement != null) 'encouragement': encouragement,
+      if (watchedDate != null) 'watched_date': watchedDate,
       if (posterUrl != null) 'poster_url': posterUrl,
+      if (rewordUrl != null) 'reword_url': rewordUrl,
       if (isScratched != null) 'is_scratched': isScratched,
     });
   }
@@ -152,12 +344,28 @@ class MoorMoviesCompanion extends UpdateCompanion<MoorMovie> {
   MoorMoviesCompanion copyWith(
       {Value<int> id,
       Value<String> title,
+      Value<int> year,
+      Value<String> category,
+      Value<String> director,
+      Value<int> duration,
+      Value<String> plot,
+      Value<String> encouragement,
+      Value<DateTime> watchedDate,
       Value<String> posterUrl,
+      Value<String> rewordUrl,
       Value<bool> isScratched}) {
     return MoorMoviesCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
+      year: year ?? this.year,
+      category: category ?? this.category,
+      director: director ?? this.director,
+      duration: duration ?? this.duration,
+      plot: plot ?? this.plot,
+      encouragement: encouragement ?? this.encouragement,
+      watchedDate: watchedDate ?? this.watchedDate,
       posterUrl: posterUrl ?? this.posterUrl,
+      rewordUrl: rewordUrl ?? this.rewordUrl,
       isScratched: isScratched ?? this.isScratched,
     );
   }
@@ -171,8 +379,32 @@ class MoorMoviesCompanion extends UpdateCompanion<MoorMovie> {
     if (title.present) {
       map['title'] = Variable<String>(title.value);
     }
+    if (year.present) {
+      map['year'] = Variable<int>(year.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (director.present) {
+      map['director'] = Variable<String>(director.value);
+    }
+    if (duration.present) {
+      map['duration'] = Variable<int>(duration.value);
+    }
+    if (plot.present) {
+      map['plot'] = Variable<String>(plot.value);
+    }
+    if (encouragement.present) {
+      map['encouragement'] = Variable<String>(encouragement.value);
+    }
+    if (watchedDate.present) {
+      map['watched_date'] = Variable<DateTime>(watchedDate.value);
+    }
     if (posterUrl.present) {
       map['poster_url'] = Variable<String>(posterUrl.value);
+    }
+    if (rewordUrl.present) {
+      map['reword_url'] = Variable<String>(rewordUrl.value);
     }
     if (isScratched.present) {
       map['is_scratched'] = Variable<bool>(isScratched.value);
@@ -207,6 +439,94 @@ class $MoorMoviesTable extends MoorMovies
     );
   }
 
+  final VerificationMeta _yearMeta = const VerificationMeta('year');
+  GeneratedIntColumn _year;
+  @override
+  GeneratedIntColumn get year => _year ??= _constructYear();
+  GeneratedIntColumn _constructYear() {
+    return GeneratedIntColumn(
+      'year',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _categoryMeta = const VerificationMeta('category');
+  GeneratedTextColumn _category;
+  @override
+  GeneratedTextColumn get category => _category ??= _constructCategory();
+  GeneratedTextColumn _constructCategory() {
+    return GeneratedTextColumn(
+      'category',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _directorMeta = const VerificationMeta('director');
+  GeneratedTextColumn _director;
+  @override
+  GeneratedTextColumn get director => _director ??= _constructDirector();
+  GeneratedTextColumn _constructDirector() {
+    return GeneratedTextColumn(
+      'director',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _durationMeta = const VerificationMeta('duration');
+  GeneratedIntColumn _duration;
+  @override
+  GeneratedIntColumn get duration => _duration ??= _constructDuration();
+  GeneratedIntColumn _constructDuration() {
+    return GeneratedIntColumn(
+      'duration',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _plotMeta = const VerificationMeta('plot');
+  GeneratedTextColumn _plot;
+  @override
+  GeneratedTextColumn get plot => _plot ??= _constructPlot();
+  GeneratedTextColumn _constructPlot() {
+    return GeneratedTextColumn(
+      'plot',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _encouragementMeta =
+      const VerificationMeta('encouragement');
+  GeneratedTextColumn _encouragement;
+  @override
+  GeneratedTextColumn get encouragement =>
+      _encouragement ??= _constructEncouragement();
+  GeneratedTextColumn _constructEncouragement() {
+    return GeneratedTextColumn(
+      'encouragement',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _watchedDateMeta =
+      const VerificationMeta('watchedDate');
+  GeneratedDateTimeColumn _watchedDate;
+  @override
+  GeneratedDateTimeColumn get watchedDate =>
+      _watchedDate ??= _constructWatchedDate();
+  GeneratedDateTimeColumn _constructWatchedDate() {
+    return GeneratedDateTimeColumn(
+      'watched_date',
+      $tableName,
+      true,
+    );
+  }
+
   final VerificationMeta _posterUrlMeta = const VerificationMeta('posterUrl');
   GeneratedTextColumn _posterUrl;
   @override
@@ -214,7 +534,17 @@ class $MoorMoviesTable extends MoorMovies
   GeneratedTextColumn _constructPosterUrl() {
     return GeneratedTextColumn('poster_url', $tableName, false,
         defaultValue: const Constant(
-            'https://d.wpimg.pl/2010171932-186511389/the-room.jpg'));
+            'https://i.ytimg.com/vi/XOcYnJGYqU8/maxresdefault.jpg'));
+  }
+
+  final VerificationMeta _rewordUrlMeta = const VerificationMeta('rewordUrl');
+  GeneratedTextColumn _rewordUrl;
+  @override
+  GeneratedTextColumn get rewordUrl => _rewordUrl ??= _constructRewordUrl();
+  GeneratedTextColumn _constructRewordUrl() {
+    return GeneratedTextColumn('reword_url', $tableName, false,
+        defaultValue: const Constant(
+            'https://i.pinimg.com/236x/6a/df/47/6adf47f699905fff05f17550115bd47c--pulp-fiction-poster-pulp-fiction-illustration.jpg'));
   }
 
   final VerificationMeta _isScratchedMeta =
@@ -229,7 +559,20 @@ class $MoorMoviesTable extends MoorMovies
   }
 
   @override
-  List<GeneratedColumn> get $columns => [id, title, posterUrl, isScratched];
+  List<GeneratedColumn> get $columns => [
+        id,
+        title,
+        year,
+        category,
+        director,
+        duration,
+        plot,
+        encouragement,
+        watchedDate,
+        posterUrl,
+        rewordUrl,
+        isScratched
+      ];
   @override
   $MoorMoviesTable get asDslTable => this;
   @override
@@ -250,9 +593,57 @@ class $MoorMoviesTable extends MoorMovies
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
+    if (data.containsKey('year')) {
+      context.handle(
+          _yearMeta, year.isAcceptableOrUnknown(data['year'], _yearMeta));
+    } else if (isInserting) {
+      context.missing(_yearMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(_categoryMeta,
+          category.isAcceptableOrUnknown(data['category'], _categoryMeta));
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('director')) {
+      context.handle(_directorMeta,
+          director.isAcceptableOrUnknown(data['director'], _directorMeta));
+    } else if (isInserting) {
+      context.missing(_directorMeta);
+    }
+    if (data.containsKey('duration')) {
+      context.handle(_durationMeta,
+          duration.isAcceptableOrUnknown(data['duration'], _durationMeta));
+    } else if (isInserting) {
+      context.missing(_durationMeta);
+    }
+    if (data.containsKey('plot')) {
+      context.handle(
+          _plotMeta, plot.isAcceptableOrUnknown(data['plot'], _plotMeta));
+    } else if (isInserting) {
+      context.missing(_plotMeta);
+    }
+    if (data.containsKey('encouragement')) {
+      context.handle(
+          _encouragementMeta,
+          encouragement.isAcceptableOrUnknown(
+              data['encouragement'], _encouragementMeta));
+    } else if (isInserting) {
+      context.missing(_encouragementMeta);
+    }
+    if (data.containsKey('watched_date')) {
+      context.handle(
+          _watchedDateMeta,
+          watchedDate.isAcceptableOrUnknown(
+              data['watched_date'], _watchedDateMeta));
+    }
     if (data.containsKey('poster_url')) {
       context.handle(_posterUrlMeta,
           posterUrl.isAcceptableOrUnknown(data['poster_url'], _posterUrlMeta));
+    }
+    if (data.containsKey('reword_url')) {
+      context.handle(_rewordUrlMeta,
+          rewordUrl.isAcceptableOrUnknown(data['reword_url'], _rewordUrlMeta));
     }
     if (data.containsKey('is_scratched')) {
       context.handle(
