@@ -38,7 +38,7 @@ class MovieTile extends StatelessWidget {
               child: Container(
                   width: double.infinity,
                   color: Colors.blue,
-                  child: Image.asset(posterUrl)),
+                  child: Image.network(posterUrl)),
             )
           ],
         ),

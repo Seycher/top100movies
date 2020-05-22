@@ -65,7 +65,7 @@ class ListOfMovies extends StatelessWidget {
               final movie = state.listOfMovies[index];
               return MovieTile(
                 movieTitle: movie.title,
-                isUnlocked: movie.isUnlocked,
+                isUnlocked: movie.isScratched,
                 posterUrl: movie.posterUrl,
                 onClick: () {
                   listOfMoviesBloc.add(MovieClickedEvent(movie.title));

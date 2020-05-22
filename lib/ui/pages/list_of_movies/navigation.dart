@@ -10,7 +10,7 @@ class ListOFMoviesRoute {
     return MaterialPageRoute(
       builder: (BuildContext context) => BlocProvider(
         create: (BuildContext context) => ListOfMoviesBloc(
-          Application.testRepo,
+          Application.movieRepository,
           Application.navigator,
         ),
         child: ListOfMovies(),

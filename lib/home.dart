@@ -9,7 +9,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => ListOfMoviesBloc(
-        Application.testRepo,
+        Application.movieRepository,
         Application.navigator,
       ),
       child: ListOfMovies(),

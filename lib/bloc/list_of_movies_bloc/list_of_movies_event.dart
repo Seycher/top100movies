@@ -1,4 +1,4 @@
-import 'package:applaca/model/movie.dart';
+import 'package:applaca/repository/movie.dart';
 import 'package:meta/meta.dart';
 
 @immutable
