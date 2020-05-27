@@ -15,17 +15,15 @@ class MovieRepository {
     });
   }
 
-  Future<void> scratchMovie(
+  Future<void> unlockMovie(
     final String title,
     final bool isScratched,
     final DateTime watchedTime,
   ) async {
-    return await _dao.updateMovie(
-      MoorMoviesCompanion(
-        title: Value(title),
-        isScratched: Value(isScratched),
-        watchedDate: Value(watchedTime),
-      ),
+    return await _dao.unlockMovie(
+      title,
+      isScratched,
+      watchedTime,
     );
   }
 
