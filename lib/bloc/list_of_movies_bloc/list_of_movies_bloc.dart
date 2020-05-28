@@ -24,11 +24,6 @@ class ListOfMoviesBloc extends Bloc<ListOfMoviesEvent, ListOfMoviesState> {
     if (event is ListenMoviesEvent) {
       // debug
       _debugAddValuesToDatabase();
-      _debugAddValuesToDatabase();
-      _debugAddValuesToDatabase();
-      _debugAddValuesToDatabase();
-      _debugAddValuesToDatabase();
-      _debugAddValuesToDatabase();
       // debug
       _movieRepository.watchAllMoviesData().listen((listOfMovies) {
         this.add(ScreenInitializedEvent(listOfMovies));

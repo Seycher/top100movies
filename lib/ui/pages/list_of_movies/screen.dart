@@ -1,7 +1,9 @@
 import 'package:applaca/bloc/list_of_movies_bloc/list_of_movies_bloc.dart';
 import 'package:applaca/bloc/list_of_movies_bloc/list_of_movies_event.dart';
 import 'package:applaca/bloc/list_of_movies_bloc/list_of_movies_state.dart';
-import 'package:applaca/ui/common/constants/style_constants.dart';
+import 'package:applaca/repository/movie.dart';
+import 'package:applaca/ui/common/constants/text_styles.dart';
+import 'package:applaca/ui/pages/bottom_navigation_bar.dart';
 import 'package:applaca/ui/pages/list_of_movies/movie_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,14 +14,10 @@ class ListOfMovies extends StatelessWidget {
     final listOfMoviesBloc = BlocProvider.of<ListOfMoviesBloc>(context);
     return BlocBuilder<ListOfMoviesBloc, ListOfMoviesState>(
       builder: (context, state) {
-        return Container(
-          color: Colors.white,
-          child: CustomScrollView(
-            slivers: <Widget>[
-              _listAppBar(listOfMoviesBloc, context),
-              _listBody(listOfMoviesBloc, state)
-            ],
-          ),
+        return Scaffold(
+          appBar: _listAppBar(listOfMoviesBloc, state),
+          body: _listBody(listOfMoviesBloc, state),
+          bottomNavigationBar: BottomNavigation(listOfMoviesBloc, 1),
         );
       },
     );
@@ -27,18 +25,31 @@ class ListOfMovies extends StatelessWidget {
 
   Widget _listAppBar(
     final ListOfMoviesBloc listOfMoviesBloc,
-    context,
+    final ListOfMoviesState state,
   ) {
-    return SliverAppBar(
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.rotate_90_degrees_ccw),
-          onPressed: () {
-            listOfMoviesBloc.add(LotteryIconClickedEvent());
-          },
+    if (state is MoviesAvailableState) {
+      final watchedMovies =
+          state.listOfMovies.where((item) => item.isScratched == true).length;
+      return AppBar(
+        title: Text(
+          "film do oglądania", //TODO: Podmiana na nazwe wylosowanego filmu
+          style: TextStyle(color: Colors.white),
         ),
-      ],
-    );
+        leading: Icon(Icons.play_circle_outline),
+        backgroundColor: Colors.black,
+        actions: <Widget>[
+          Center(
+            child: Text(
+              '$watchedMovies' + '/100',
+              style: appBarTextStyle,
+            ),
+          ),
+          SizedBox(width: 20),
+        ],
+      );
+    } else {
+      return AppBar(backgroundColor: Colors.black);
+    }
   }
 
   Widget _listBody(
@@ -47,39 +58,39 @@ class ListOfMovies extends StatelessWidget {
   ) {
     if (state is InitialListOfMoviesState) {
       listOfMoviesBloc.add(ListenMoviesEvent());
-      return SliverToBoxAdapter(
-        child: Container(),
-      );
     } else if (state is MoviesAvailableState) {
-      return SliverPadding(
-        padding: const EdgeInsets.all(kPaddingSmall),
-        sliver: SliverGrid(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            childAspectRatio: 1,
-          ),
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              final movie = state.listOfMovies[index];
-              return MovieTile(
-                movieTitle: movie.title,
-                isUnlocked: movie.isScratched,
-                posterUrl: movie.posterUrl,
-                onClick: () {
-                  listOfMoviesBloc.add(MovieClickedEvent(movie.title));
-                },
-              );
-            },
-            childCount: state.listOfMovies.length,
-          ),
-        ),
-      );
+      return _moviesAvailableWidget(listOfMoviesBloc, state.listOfMovies);
     } else if (state is NoMoviesAvailableState) {
-      return SliverToBoxAdapter(
-        child: Container(),
-      );
+      return _moviesNoAvailableWidget();
     }
+  }
+
+  Widget _moviesAvailableWidget(
+    final ListOfMoviesBloc listOfMoviesBloc,
+    final List<Movie> listOfMovies,
+  ) {
+    return ListView.builder(
+      itemBuilder: (BuildContext context, int index) {
+        final movie = listOfMovies[index];
+        return MovieTile(
+          title: movie.title,
+          year: movie.year,
+          isScratched: movie.isScratched,
+          duration: movie.duration,
+          category: movie.category,
+          posterUrl: movie.posterUrl,
+          rewordUrl: movie.rewordUrl,
+          time: movie.time,
+          onMovieClick: () {
+            listOfMoviesBloc.add(MovieClickedEvent(movie.title));
+          },
+        );
+      },
+      itemCount: listOfMovies.length,
+    );
+  }
+
+  Widget _moviesNoAvailableWidget() {
+    return Container(color: Colors.black);
   }
 }
