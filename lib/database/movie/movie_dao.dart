@@ -10,6 +10,18 @@ class MovieDao extends DatabaseAccessor<Database> with _$MovieDaoMixin {
 
   Stream<List<MoorMovie>> watchAllMovies() => select(moorMovies).watch();
 
+  Future unlockMovie(
+    final String title,
+    final bool isScratched,
+    final DateTime watchedTime,
+  ) async {
+    return (update(moorMovies)..where((movie) => movie.title.like(title)))
+        .write(MoorMoviesCompanion(
+      isScratched: Value(isScratched),
+      watchedDate: Value(watchedTime),
+    ));
+  }
+
   Future updateMovie(final Insertable<MoorMovie> movie) async {
     return await update(moorMovies).replace(movie);
   }
