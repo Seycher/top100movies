@@ -6,6 +6,7 @@ import 'package:moor_flutter/moor_flutter.dart';
 
 part 'database.g.dart';
 
+
 @lazySingleton
 @UseMoor(tables: [MoorMovies], daos: [MovieDao])
 class Database extends _$Database {

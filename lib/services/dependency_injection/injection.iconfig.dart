@@ -4,19 +4,26 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+import 'package:applaca/services/internationalization/app_localizations_delegate.dart';
 import 'package:applaca/database/database.dart';
 import 'package:applaca/database/movie/movie_dao.dart';
 import 'package:applaca/repository/movie_repository.dart';
+import 'package:applaca/repository/shared_preferences_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:applaca/bloc/list_of_movies_bloc/list_of_movies_bloc.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/navigator.dart';
 import 'package:get_it/get_it.dart';
 
 void $initGetIt(GetIt g, {String environment}) {
+  g.registerLazySingleton<AppLocalizationsDelegate>(
+      () => AppLocalizationsDelegate());
   g.registerLazySingleton<Database>(() => Database());
   g.registerLazySingleton<MovieDao>(() => MovieDao(g<Database>()));
   g.registerLazySingleton<MovieRepository>(
       () => MovieRepository(g<MovieDao>()));
+  g.registerLazySingleton<SharedPreferencesRepository>(
+      () => SharedPreferencesRepository(g<SharedPreferences>()));
   g.registerLazySingleton<ListOfMoviesBloc>(() =>
       ListOfMoviesBloc(g<MovieRepository>(), g<GlobalKey<NavigatorState>>()));
 }
