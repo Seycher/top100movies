@@ -17,6 +17,11 @@ class MovieRepository {
     });
   }
 
+  Future<Movie> getSingleMovie(final String title) async {
+    final moorMovie = await _dao.getMovie(title);
+    return Movie.fromMoor(moorMovie);
+  }
+
   Future<void> unlockMovie(
     final String title,
     final bool isScratched,

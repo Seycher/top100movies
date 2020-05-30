@@ -25,7 +25,7 @@ class ListOfMoviesBloc extends Bloc<ListOfMoviesEvent, ListOfMoviesState> {
   ) async* {
     if (event is ListenMoviesEvent) {
       // debug
-      _debugAddValuesToDatabase();
+      await _debugAddValuesToDatabase();
       // debug
       _movieRepository.watchAllMoviesData().listen((listOfMovies) {
         this.add(ScreenInitializedEvent(listOfMovies));
@@ -88,6 +88,6 @@ class ListOfMoviesBloc extends Bloc<ListOfMoviesEvent, ListOfMoviesState> {
       "https://fwcdn.pl/fpo/09/98/998/7314731.3.jpg",
       'https://i.pinimg.com/originals/0b/a7/00/0ba70078291e93a138d5c5e722f9698c.jpg',
     );
-    _movieRepository.unlockMovie('FORREST GUMP', true, DateTime.now());
+    await _movieRepository.unlockMovie('FORREST GUMP', true, DateTime.now());
   }
 }
