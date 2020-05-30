@@ -4,10 +4,12 @@ import 'package:applaca/repository/movie.dart';
 import 'package:applaca/repository/movie_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
 import 'list_of_movies_event.dart';
 import 'list_of_movies_state.dart';
 
+@lazySingleton
 class ListOfMoviesBloc extends Bloc<ListOfMoviesEvent, ListOfMoviesState> {
   final MovieRepository _movieRepository;
   final GlobalKey<NavigatorState> _navigator;

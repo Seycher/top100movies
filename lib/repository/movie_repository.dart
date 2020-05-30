@@ -1,9 +1,11 @@
 import 'package:applaca/database/database.dart';
 import 'package:applaca/database/movie/movie_dao.dart';
+import 'package:injectable/injectable.dart';
 import 'package:moor/moor.dart';
 
 import 'movie.dart';
 
+@lazySingleton
 class MovieRepository {
   final MovieDao _dao;
 

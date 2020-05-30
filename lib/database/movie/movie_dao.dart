@@ -1,9 +1,11 @@
 import 'package:applaca/database/database.dart';
 import 'package:applaca/database/movie/moor_movie.dart';
+import 'package:injectable/injectable.dart';
 import 'package:moor/moor.dart';
 
 part 'movie_dao.g.dart';
 
+@lazySingleton
 @UseDao(tables: [MoorMovies])
 class MovieDao extends DatabaseAccessor<Database> with _$MovieDaoMixin {
   MovieDao(Database db) : super(db);
