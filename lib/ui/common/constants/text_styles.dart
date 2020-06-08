@@ -1,8 +1,43 @@
 import 'package:applaca/ui/common/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 
-const movieTileTextStyle = TextStyle(color: Colors.grey, fontFamily: kTileTextFont);
+const kMovieTileTextStyle = TextStyle(
+  fontFamily: kBebasNeueTextFont,
+  color: Colors.grey,
+);
 
-const appBarTextStyle = TextStyle(color: Colors.white, fontSize: 20);
+const kAppBarTextStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 20,
+);
 
-const titleTextStyle = TextStyle(fontSize: 24, color: Colors.white, fontFamily: kTileTextFont);
+const kTitleTextStyle = TextStyle(
+  fontFamily: kBebasNeueTextFont,
+  color: Colors.white,
+  fontSize: 24,
+);
+
+const kMovieDetailsInfoTextStyle = TextStyle(
+  fontFamily: kBebasNeueProTextFont,
+  color: Color(0xCCFFFFFF), //white with 80% opacity
+  fontSize: 15.0,
+);
+
+const kMovieDetailsDescriptionTextStyle = TextStyle(
+  fontFamily: kBebasNeueProTextFont,
+  color: Colors.white,
+  fontSize: 17.0,
+);
+
+const kMovieDetailsTitleTextStyle = TextStyle(
+  fontFamily: kBebasNeueProTextFont,
+  color: Colors.white,
+  fontSize: 54.0,
+  fontWeight: FontWeight.bold,
+);
+
+const kMovieDetailsErrorTextStyle = TextStyle(
+  fontFamily: kBebasNeueProTextFont,
+  color: Colors.white,
+  fontSize: 32,
+);

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:applaca/repository/movie.dart';
 import 'package:applaca/repository/movie_repository.dart';
+import 'package:applaca/ui/pages/reward/navigation.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -35,7 +36,7 @@ class ListOfMoviesBloc extends Bloc<ListOfMoviesEvent, ListOfMoviesState> {
     } else if (event is PrizeUnlockedEvent) {
       yield await _unlockTheMovie(event);
     } else if (event is MovieClickedEvent) {
-      await _onMovieClicked(event);
+      _onMovieClicked(event);
     } else if (event is LotteryIconClickedEvent) {
       await _onLotteryIconClicked(event);
     }
@@ -57,8 +58,8 @@ class ListOfMoviesBloc extends Bloc<ListOfMoviesEvent, ListOfMoviesState> {
     //TODO metoda na repo o update filmu
   }
 
-  Future<void> _onMovieClicked(MovieClickedEvent event) {
-    //TODO nawigacja do detali filmu
+  void _onMovieClicked(MovieClickedEvent event) {
+    _navigator.currentState.push(RewardRoute.get(event.title));
   }
 
   Future<void> _onLotteryIconClicked(LotteryIconClickedEvent event) {
@@ -67,7 +68,7 @@ class ListOfMoviesBloc extends Bloc<ListOfMoviesEvent, ListOfMoviesState> {
 
   Future<void> _debugAddValuesToDatabase() async {
     await _movieRepository.addMovie(
-      "PULP FICTION",
+      "Pulp Fiction",
       1994,
       "Gangsterski",
       "Quentin Tarantino",
@@ -78,7 +79,7 @@ class ListOfMoviesBloc extends Bloc<ListOfMoviesEvent, ListOfMoviesState> {
       'https://i.pinimg.com/236x/6a/df/47/6adf47f699905fff05f17550115bd47c--pulp-fiction-poster-pulp-fiction-illustration.jpg',
     );
     await _movieRepository.addMovie(
-      "FORREST GUMP",
+      "Forrest Gump",
       1994,
       "Dramat / Komedia",
       "Robert Zemeckis",

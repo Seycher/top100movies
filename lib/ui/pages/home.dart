@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
         getIt<MovieRepository>(),
         getIt<GlobalKey<NavigatorState>>(),
       ),
-      child: ListOfMovies(),
+      child: ListOfMoviesScreen(),
     );
   }
 }

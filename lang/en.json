@@ -4,4 +4,5 @@
   "s_unlock_reward_screen_congratulations_second": "Congratulations!",
   "s_unlock_reward_screen_call_to_scrap": "Scrap to reveal the reward progress",
   "s_unlock_reward_screen_claim": "CLAIM"
+  "s_reward_screen_no_data_error": "We were unable to load the information about the movie.\n\nPlease check your internet connection."
 }

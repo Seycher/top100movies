@@ -20,4 +20,6 @@ class LocalizedStrings {
 
   static const String S_Unlock_Reward_Screen_Claim =
       's_unlock_reward_screen_claim';
+  static const String S_Reward_Screen_No_Data_Error =
+      's_reward_screen_no_data_error';
 }

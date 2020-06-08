@@ -45,20 +45,20 @@ Widget lockedTile(
                 children: <Widget>[
                   Text(
                     title,
-                    style: titleTextStyle,
+                    style: kTitleTextStyle,
                   ),
                   Spacer(),
-                  Text(category, style: movieTileTextStyle),
+                  Text(category, style: kMovieTileTextStyle),
                 ],
               ),
               Spacer(),
               Row(
                 children: <Widget>[
-                  Text('$year', style: movieTileTextStyle),
+                  Text('$year', style: kMovieTileTextStyle),
                   Spacer(),
                   Text(
                     ('${duration ~/ 60}H ${duration % 60}MIN'),
-                    style: movieTileTextStyle,
+                    style: kMovieTileTextStyle,
                   ),
                 ],
               ),
