@@ -9,5 +9,15 @@ part of 'localized_strings.dart';
 class LocalizedStrings {
   static const String Title = 'title';
 
-  static const String Second_String = 'second_string';
+  static const String S_Unlock_Reward_Screen_Congratulations_First =
+      's_unlock_reward_screen_congratulations_first';
+
+  static const String S_Unlock_Reward_Screen_Congratulations_Second =
+      's_unlock_reward_screen_congratulations_second';
+
+  static const String S_Unlock_Reward_Screen_Call_To_Scrap =
+      's_unlock_reward_screen_call_to_scrap';
+
+  static const String S_Unlock_Reward_Screen_Claim =
+      's_unlock_reward_screen_claim';
 }

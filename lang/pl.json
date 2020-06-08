@@ -1,4 +1,7 @@
 {
   "title": "Topka 100",
-  "second_string": ""
+  "s_unlock_reward_screen_congratulations_first": "Udało ci się!",
+  "s_unlock_reward_screen_congratulations_second": "Gratulacje!",
+  "s_unlock_reward_screen_call_to_scrap": "Zdrap żeby odkryć nagrodę",
+  "s_unlock_reward_screen_claim": "ODBIERZ"
 }
