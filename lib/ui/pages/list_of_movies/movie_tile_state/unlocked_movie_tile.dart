@@ -26,12 +26,12 @@ Widget unlockedTile(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text(title, style: titleTextStyle),
-              Text(category, style: movieTileTextStyle),
-              Text('$year', style: movieTileTextStyle),
+              Text(title, style: kTitleTextStyle),
+              Text(category, style: kMovieTileTextStyle),
+              Text('$year', style: kMovieTileTextStyle),
               Text(('${duration ~/ 60}H ${duration % 60}MIN'),
-                  style: movieTileTextStyle),
-              Text('Watched', style: movieTileTextStyle),
+                  style: kMovieTileTextStyle),
+              Text('Watched', style: kMovieTileTextStyle),
               //TODO: data odblokowania
             ],
           ),

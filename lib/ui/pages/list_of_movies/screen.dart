@@ -8,7 +8,7 @@ import 'package:applaca/ui/pages/shared_components/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ListOfMovies extends StatelessWidget {
+class ListOfMoviesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final listOfMoviesBloc = BlocProvider.of<ListOfMoviesBloc>(context);
@@ -17,7 +17,7 @@ class ListOfMovies extends StatelessWidget {
         return Scaffold(
           appBar: _listAppBar(listOfMoviesBloc, state),
           body: _listBody(listOfMoviesBloc, state),
-          bottomNavigationBar: BottomNavigation(listOfMoviesBloc, 1),
+          bottomNavigationBar: BottomNavigation(1),
         );
       },
     );
@@ -41,7 +41,7 @@ class ListOfMovies extends StatelessWidget {
           Center(
             child: Text(
               '$watchedMovies' + '/100',
-              style: appBarTextStyle,
+              style: kAppBarTextStyle,
             ),
           ),
           SizedBox(width: 20),
@@ -58,10 +58,16 @@ class ListOfMovies extends StatelessWidget {
   ) {
     if (state is InitialListOfMoviesState) {
       listOfMoviesBloc.add(ListenMoviesEvent());
+      return Container(
+        color: Colors.black,
+      );
     } else if (state is MoviesAvailableState) {
       return _moviesAvailableWidget(listOfMoviesBloc, state.listOfMovies);
     } else if (state is NoMoviesAvailableState) {
       return _moviesNoAvailableWidget();
+    } else {
+      return Container(color: Colors.red);
+      //TODO: Implementacja loggera
     }
   }
 
@@ -79,10 +85,12 @@ class ListOfMovies extends StatelessWidget {
           duration: movie.duration,
           category: movie.category,
           posterUrl: movie.posterUrl,
-          rewordUrl: movie.rewordUrl,
+          rewardUrl: movie.rewardUrl,
           time: movie.time,
           onMovieClick: () {
-            listOfMoviesBloc.add(MovieClickedEvent(movie.title));
+            listOfMoviesBloc.add(MovieClickedEvent(
+              movie.title,
+            ));
           },
         );
       },

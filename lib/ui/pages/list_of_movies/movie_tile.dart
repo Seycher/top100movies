@@ -12,7 +12,7 @@ class MovieTile extends StatelessWidget {
   final String category;
   final int year;
   final int duration;
-  final String rewordUrl;
+  final String rewardUrl;
   final DateTime time;
 
   MovieTile({
@@ -23,7 +23,7 @@ class MovieTile extends StatelessWidget {
     this.category,
     this.year,
     this.duration,
-    this.rewordUrl,
+    this.rewardUrl,
     this.time,
   });
 
@@ -39,7 +39,7 @@ class MovieTile extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               isScratched
-                  ? unlockedTile(title, category, year, duration, rewordUrl)
+                  ? unlockedTile(title, category, year, duration, rewardUrl)
                   : lockedTile(title, category, year, duration, posterUrl),
               isScratched ? Container() : _lockedMovieShadow(),
             ],

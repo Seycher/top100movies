@@ -11,7 +11,7 @@ class Movie {
   final String encouragement;
   final DateTime time;
   final String posterUrl;
-  final String rewordUrl;
+  final String rewardUrl;
   final bool isScratched;
 
   //TODO if you make any changes with values remember about generating new toString, and equals
@@ -27,7 +27,7 @@ class Movie {
     this.encouragement,
     this.time,
     this.posterUrl,
-    this.rewordUrl,
+    this.rewardUrl,
     this.isScratched,
   );
 
@@ -50,7 +50,7 @@ class Movie {
 
   @override
   String toString() {
-    return 'Movie{id: $id, title: $title, year: $year, category: $category, director: $director, duration: $duration, plot: $plot, encouragement: $encouragement, time: $time, posterUrl: $posterUrl, rewordUrl: $rewordUrl, isScratched: $isScratched}';
+    return 'Movie{id: $id, title: $title, year: $year, category: $category, director: $director, duration: $duration, plot: $plot, encouragement: $encouragement, time: $time, posterUrl: $posterUrl, rewordUrl: $rewardUrl, isScratched: $isScratched}';
   }
 
   @override
@@ -68,7 +68,7 @@ class Movie {
           encouragement == other.encouragement &&
           time == other.time &&
           posterUrl == other.posterUrl &&
-          rewordUrl == other.rewordUrl &&
+          rewardUrl == other.rewardUrl &&
           isScratched == other.isScratched;
 
   @override
@@ -83,6 +83,6 @@ class Movie {
       encouragement.hashCode ^
       time.hashCode ^
       posterUrl.hashCode ^
-      rewordUrl.hashCode ^
+      rewardUrl.hashCode ^
       isScratched.hashCode;
 }
