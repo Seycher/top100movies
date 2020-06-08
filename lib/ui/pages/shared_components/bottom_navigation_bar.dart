@@ -37,7 +37,7 @@ class BottomNavigation extends StatelessWidget {
               size: 32,
             ),
             onPressed: () {
-              //TODO: nawigacja do listy filmów
+              //TODO: nawigacja do listy
             },
           ),
           title: Text("", style: TextStyle(fontSize: 0)),

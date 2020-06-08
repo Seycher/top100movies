@@ -1,4 +1,7 @@
 {
   "title": "Top 100",
-  "second_string": ""
+  "s_unlock_reward_screen_congratulations_first": "You made it",
+  "s_unlock_reward_screen_congratulations_second": "Congratulations!",
+  "s_unlock_reward_screen_call_to_scrap": "Scrap to reveal the reward progress",
+  "s_unlock_reward_screen_claim": "CLAIM"
 }
