@@ -1,8 +1,9 @@
 import 'package:applaca/repository/shared_preferences_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'shared_preferences_mock.dart';
+class SharedPreferencesMock extends Mock implements SharedPreferences {}
 
 const String _isOnboardingCompleted = 'isOnboardingCompleted';
 const String _currentFilmId = 'currentFilmId';

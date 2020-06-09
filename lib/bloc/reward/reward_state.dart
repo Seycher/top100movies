@@ -1,9 +1,14 @@
-abstract class RewardState {
+import 'package:equatable/equatable.dart';
+
+abstract class RewardState extends Equatable {
   const RewardState();
 }
 
 class InitialRewardState extends RewardState {
   const InitialRewardState();
+
+  @override
+  List<Object> get props => [];
 }
 
 class RewardAvailableState extends RewardState {
@@ -24,8 +29,22 @@ class RewardAvailableState extends RewardState {
     this.length,
     this.description,
   });
+
+  @override
+  List<Object> get props => [
+        title,
+        year,
+        category,
+        director,
+        description,
+        length,
+        rewardUrl,
+      ];
 }
 
 class NoRewardAvailableState extends RewardState {
   const NoRewardAvailableState();
+
+  @override
+  List<Object> get props => [];
 }
