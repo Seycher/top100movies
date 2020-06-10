@@ -1,15 +1,17 @@
 import 'package:applaca/services/internationalization/app_localizations_delegate.dart';
 import 'package:applaca/services/internationalization/supported_languages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'services/dependency_injection/injection.dart';
-import 'services/internationalization/app_localizations.dart';
-import 'ui/pages/home.dart';
+import '../services/dependency_injection/injection.dart';
+import '../services/internationalization/app_localizations.dart';
+import 'pages/home.dart';
 
 class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    _rotationLockForEntireApp();
     return MaterialApp(
       title: 'top100',
       theme: ThemeData(primarySwatch: Colors.blue),
@@ -23,5 +25,11 @@ class Application extends StatelessWidget {
       navigatorKey: getIt<GlobalKey<NavigatorState>>(),
       home: Home(),
     );
+  }
+
+  void _rotationLockForEntireApp() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
   }
 }
