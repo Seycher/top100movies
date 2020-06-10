@@ -22,19 +22,15 @@ class MovieRepository {
     return Movie.fromMoor(moorMovie);
   }
 
-  Future<void> unlockMovie(
+  Future unlockMovie(
     final String title,
     final bool isScratched,
     final DateTime watchedTime,
   ) async {
-    return await _dao.unlockMovie(
-      title,
-      isScratched,
-      watchedTime,
-    );
+    await _dao.unlockMovie(title, isScratched, watchedTime);
   }
 
-  Future<void> addMovie(
+  Future addMovie(
     final String title,
     final int year,
     final String category,

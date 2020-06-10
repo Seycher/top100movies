@@ -35,6 +35,6 @@ class UnlockRewardBloc extends Bloc<UnlockRewardEvent, UnlockRewardState> {
   }
 
   void _onRewardClaimed() {
-    _navigator.currentState.push(ListOFMoviesRoute.get());
+    _navigator.currentState.push(ListOfMoviesRoute.get());
   }
 }
