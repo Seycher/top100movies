@@ -19,9 +19,10 @@ const String director = '';
 const int duration = 1;
 const String plot = '';
 const String encouragement = '';
-const bool isScratched = false;
+const bool isUnlocked = false;
 const String posterUrl = '';
 const String rewordUrl = '';
+
 final moorMovie = MoorMovie(
   id: id,
   title: movieTitle,
@@ -31,10 +32,11 @@ final moorMovie = MoorMovie(
   duration: duration,
   plot: plot,
   encouragement: encouragement,
-  isScratched: isScratched,
+  isUnlocked: isUnlocked,
   posterUrl: posterUrl,
   rewordUrl: rewordUrl,
 );
+
 final listOfMoorMovies = [moorMovie, moorMovie];
 final listOfMovies = listOfMoorMovies.map((e) => Movie.fromMoor(e));
 final listOfListOfMoviesToEmit = [listOfMoorMovies, listOfMoorMovies];
@@ -55,8 +57,15 @@ main() {
   setUp(() {
     _movieDao = MovieDaoMock();
     _repository = MovieRepository(_movieDao);
-    when(_movieDao.getMovie(movieTitle))
+
+    when(_movieDao.getMovieByTitle(movieTitle))
         .thenAnswer((_) => Future.value(moorMovie));
+
+    when(_movieDao.getMovieById(id)).thenAnswer((_) => Future.value(moorMovie));
+
+    when(_movieDao.getAllMovies())
+        .thenAnswer((_) => Future.value(listOfMoorMovies));
+
     when(_movieDao.watchAllMovies())
         .thenAnswer((_) => Stream.fromIterable(listOfListOfMoviesToEmit));
   });
@@ -67,16 +76,44 @@ main() {
       expect(list, listOfMovies);
     });
   });
-  test('getSingleMovie() returns single movie with matching title', () async {
-    final movie = await _repository.getSingleMovie(movieTitle);
+
+  test('getAllMovies() returns list of movies', () async {
+    final movies = await _repository.getAllMovies();
+
+    expect(movies, listOfMovies);
+  });
+
+  test('getAllMovies() calls getAllMovies on Dao', () async {
+    await _repository.getAllMovies();
+
+    verify(_movieDao.getAllMovies());
+  });
+
+  test('getSingleMovieByTitle() returns single movie with matching title',
+      () async {
+    final movie = await _repository.getSingleMovieByTitle(movieTitle);
 
     expect(movie.title, movieTitle);
   });
-  test('getSingleMovie() calls getMovie on Dao', () async {
-    await _repository.getSingleMovie(movieTitle);
 
-    verify(_movieDao.getMovie(movieTitle));
+  test('getSingleMovieByTitle() calls getMovieByTitle on Dao', () async {
+    await _repository.getSingleMovieByTitle(movieTitle);
+
+    verify(_movieDao.getMovieByTitle(movieTitle));
   });
+
+  test('getSingleMovieById() returns single movie with matching Id', () async {
+    final movie = await _repository.getSingleMovieById(id);
+
+    expect(movie.id, id);
+  });
+
+  test('getSingleMovieById() calls getMovieById on Dao', () async {
+    await _repository.getSingleMovieById(id);
+
+    verify(_movieDao.getMovieById(id));
+  });
+
   test('unlockMovie() calls unlockMovie on Dao', () async {
     when(_movieDao.unlockMovie(movieTitle, true, DateTime(1)))
         .thenAnswer((_) => null);
@@ -84,6 +121,7 @@ main() {
 
     verify(_movieDao.unlockMovie(movieTitle, true, DateTime(1)));
   });
+
   test('addMovie() calls insertMovie on Dao', () async {
     when(_movieDao.insertMovie(moorMovieCompanion)).thenAnswer((_) => null);
     await _repository.addMovie(

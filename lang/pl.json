@@ -1,8 +1,17 @@
 {
-  "title": "Topka 100",
-  "s_unlock_reward_screen_congratulations_first": "Udało ci się!",
-  "s_unlock_reward_screen_congratulations_second": "Gratulacje!",
-  "s_unlock_reward_screen_call_to_scrap": "Zdrap żeby odkryć nagrodę",
-  "s_unlock_reward_screen_claim": "ODBIERZ",
-  "s_reward_screen_no_data_error": "Nie udało się załadować informacji o filmie.\n\nSprawdź połączenie\nz internetem."
+  "title": "Topka 100 filmów",
+  "unlock_reward_screen_congratulations_first": "Udało ci się!",
+  "unlock_reward_screen_congratulations_second": "Gratulacje!",
+  "unlock_reward_screen_call_to_scrap": "Zdrap żeby odkryć nagrodę",
+  "unlock_reward_screen_claim": "ODBIERZ",
+  "reward_screen_no_data_error": "Nie udało się załadować informacji o filmie.\n\nSprawdź połączenie\nz internetem.",
+  "draw_movie_draw_home_home": "Naszym zwycięzcą\njest...",
+  "draw_movie_draw_home_button": "LOSUJ",
+  "draw_movie_draw_movie_saw_button": "WIDZIAŁEM",
+  "draw_movie_draw_movie_accept_button": "AKCEPTUJ",
+  "draw_movie_challenge_accepted_finish_button": "UDAŁO MI SIĘ",
+  "draw_movie_challenge_accepted_top_timer_text": "Zagrajmy w grę. Masz",
+  "draw_movie_challenge_accepted_center_timer_hours": "GODZINY",
+  "draw_movie_challenge_accepted_bottom_timer_text": "by obejrzeć film",
+  "draw_movie_challenge_accepted_resignation_button": "losuj ponownie"
 }

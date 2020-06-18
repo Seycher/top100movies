@@ -26,25 +26,25 @@ main() {
     'RewardBloc calls getSingleMovie method on repo when RewardRequestedEvent added',
     build: () async => RewardBloc(_repo, title),
     act: (bloc) => bloc.add(RewardRequestedEvent()),
-    verify: (_) async => verify(_repo.getSingleMovie(title)).called(1),
+    verify: (_) async => verify(_repo.getSingleMovieByTitle(title)).called(1),
   );
   blocTest(
     'RewardBloc emits NoRewardAvailableState when RewardRequestedEvent added and repo gets back null as movie',
     build: () async => RewardBloc(_repo, title),
     act: (bloc) => bloc.add(RewardRequestedEvent()),
-    verify: (_) async => verify(_repo.getSingleMovie(title)).called(1),
+    verify: (_) async => verify(_repo.getSingleMovieByTitle(title)).called(1),
     expect: [NoRewardAvailableState()],
   );
   blocTest(
     'RewardBloc emits RewardAvailableState when RewardRequestedEvent added and repo gets movie',
     build: () async {
-      when(_repo.getSingleMovie(title)).thenAnswer(
+      when(_repo.getSingleMovieByTitle(title)).thenAnswer(
         (realInvocation) => Future.value(movie),
       );
       return RewardBloc(_repo, title);
     },
     act: (bloc) => bloc.add(RewardRequestedEvent()),
-    verify: (_) async => verify(_repo.getSingleMovie(title)).called(1),
+    verify: (_) async => verify(_repo.getSingleMovieByTitle(title)).called(1),
     expect: [
       RewardAvailableState(
           rewardUrl: '',

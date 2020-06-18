@@ -1,8 +1,17 @@
 {
-  "title": "Top 100",
-  "s_unlock_reward_screen_congratulations_first": "You made it",
-  "s_unlock_reward_screen_congratulations_second": "Congratulations!",
-  "s_unlock_reward_screen_call_to_scrap": "Scrap to reveal the reward progress",
-  "s_unlock_reward_screen_claim": "CLAIM",
-  "s_reward_screen_no_data_error": "We were unable to load the information about the movie.\n\nPlease check your internet connection."
+  "title": "Top 100 Movies",
+  "unlock_reward_screen_congratulations_first": "You made it",
+  "unlock_reward_screen_congratulations_second": "Congratulations!",
+  "unlock_reward_screen_call_to_scrap": "Scrap to reveal the reward progress",
+  "unlock_reward_screen_claim": "CLAIM",
+  "reward_screen_no_data_error": "We were unable to load the information about the movie.\n\nPlease check your internet connection.",
+  "draw_movie_draw_home_home": "And the winner\nis...",
+  "draw_movie_draw_home_button": "SHUFFLE",
+  "draw_movie_draw_movie_saw_button": "I SAW IT",
+  "draw_movie_draw_movie_accept_button": "ACCEPT",
+  "draw_movie_challenge_accepted_finish_button": "I MADE IT",
+  "draw_movie_challenge_accepted_top_timer_text": "Let's play a game. You have",
+  "draw_movie_challenge_accepted_center_timer_hours": "HOURS LEFT",
+  "draw_movie_challenge_accepted_bottom_timer_text": "to watch the film",
+  "draw_movie_challenge_accepted_resignation_button": "Shuffle again"
 }

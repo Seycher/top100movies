@@ -15,11 +15,11 @@ class SharedPreferencesRepository {
     _prefs.setBool(_isOnboardingCompleted, true);
   }
 
-  void setCurrentFilmId(int newCurrentFilmId) {
+  void setCurrentFilmId(final int newCurrentFilmId) {
     _prefs.setInt(_currentFilmId, newCurrentFilmId);
   }
 
-  void setCurrentFilmDateTime(DateTime newCurrentFilmDateTime) {
+  void setCurrentFilmDateTime(final DateTime newCurrentFilmDateTime) {
     _prefs.setString(
         _currentFilmDateTime, newCurrentFilmDateTime.toIso8601String());
   }

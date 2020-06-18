@@ -12,20 +12,29 @@ class MovieDao extends DatabaseAccessor<Database> with _$MovieDaoMixin {
 
   Stream<List<MoorMovie>> watchAllMovies() => select(moorMovies).watch();
 
-  Future<MoorMovie> getMovie(final String title) async {
+  Future<List<MoorMovie>> getAllMovies() async {
+    return await select(moorMovies).get();
+  }
+
+  Future<MoorMovie> getMovieByTitle(final String title) async {
     return await (select(moorMovies)
-          ..where((movie) => movie.title.equals(title)))
+      ..where((movie) => movie.title.equals(title)))
+        .getSingle();
+  }
+
+  Future<MoorMovie> getMovieById(final int id) async {
+    return await (select(moorMovies)..where((movie) => movie.id.equals(id)))
         .getSingle();
   }
 
   Future unlockMovie(
-    final String title,
-    final bool isScratched,
-    final DateTime watchedTime,
-  ) async {
+      final String title,
+      final bool isUnlocked,
+      final DateTime watchedTime,
+      ) async {
     return await (update(moorMovies)..where((movie) => movie.title.like(title)))
         .write(MoorMoviesCompanion(
-      isScratched: Value(isScratched),
+      isUnlocked: Value(isUnlocked),
       watchedDate: Value(watchedTime),
     ));
   }
@@ -36,5 +45,9 @@ class MovieDao extends DatabaseAccessor<Database> with _$MovieDaoMixin {
 
   Future<int> insertMovie(Insertable<MoorMovie> movie) async {
     return await into(moorMovies).insert(movie);
+  }
+
+  Future deleteMovie(final Insertable<MoorMovie> movie) async {
+    return await delete(moorMovies).delete(movie);
   }
 }

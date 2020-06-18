@@ -16,11 +16,12 @@ class InitialListOfMoviesState extends ListOfMoviesState {
 
 class MoviesAvailableState extends ListOfMoviesState {
   final List<Movie> listOfMovies;
+  final String title;
 
-  const MoviesAvailableState(this.listOfMovies);
+  const MoviesAvailableState(this.listOfMovies, this.title);
 
   @override
-  List<Object> get props => [listOfMovies];
+  List<Object> get props => [listOfMovies, title];
 }
 
 class NoMoviesAvailableState extends ListOfMoviesState {

@@ -17,30 +17,47 @@ class MovieRepository {
     });
   }
 
-  Future<Movie> getSingleMovie(final String title) async {
-    final moorMovie = await _dao.getMovie(title);
+  Future<List<Movie>> getAllMovies() async {
+    final movies = await _dao.getAllMovies();
+
+    return movies.map((movie) => Movie.fromMoor(movie)).toList();
+  }
+
+  Future<Movie> getSingleMovieByTitle(final String title) async {
+    final moorMovie = await _dao.getMovieByTitle(title);
+
     return Movie.fromMoor(moorMovie);
   }
 
-  Future unlockMovie(
-    final String title,
-    final bool isScratched,
-    final DateTime watchedTime,
-  ) async {
-    await _dao.unlockMovie(title, isScratched, watchedTime);
+  Future<Movie> getSingleMovieById(final int id) async {
+    final moorMovie = await _dao.getMovieById(id);
+
+    return Movie.fromMoor(moorMovie);
   }
 
-  Future addMovie(
-    final String title,
-    final int year,
-    final String category,
-    final String director,
-    final int duration,
-    final String plot,
-    final String encouragement,
-    final String posterUrl,
-    final String rewordUrl,
-  ) async {
+  Future<void> unlockMovie(
+      final String title,
+      final bool isUnlocked,
+      final DateTime watchedTime,
+      ) async {
+    return await _dao.unlockMovie(
+      title,
+      isUnlocked,
+      watchedTime,
+    );
+  }
+
+  Future<void> addMovie(
+      final String title,
+      final int year,
+      final String category,
+      final String director,
+      final int duration,
+      final String plot,
+      final String encouragement,
+      final String posterUrl,
+      final String rewardUrl,
+      ) async {
     return await _dao.insertMovie(MoorMoviesCompanion(
       title: Value(title),
       year: Value(year),
@@ -50,7 +67,7 @@ class MovieRepository {
       plot: Value(plot),
       encouragement: Value(encouragement),
       posterUrl: Value(posterUrl),
-      rewordUrl: Value(rewordUrl),
+      rewordUrl: Value(rewardUrl),
     ));
   }
 }
