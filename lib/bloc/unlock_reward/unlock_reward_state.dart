@@ -12,8 +12,8 @@ class RewardNotScratchedState extends UnlockRewardState {
   const RewardNotScratchedState(this.rewardURL);
 }
 
-class RewardIsScratchedState extends UnlockRewardState {
+class RewardIsUnlockedState extends UnlockRewardState {
   final String rewardURL;
 
-  const RewardIsScratchedState(this.rewardURL);
+  const RewardIsUnlockedState(this.rewardURL);
 }

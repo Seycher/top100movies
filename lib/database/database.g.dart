@@ -19,7 +19,7 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
   final DateTime watchedDate;
   final String posterUrl;
   final String rewordUrl;
-  final bool isScratched;
+  final bool isUnlocked;
   MoorMovie(
       {@required this.id,
       @required this.title,
@@ -32,7 +32,7 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
       this.watchedDate,
       @required this.posterUrl,
       @required this.rewordUrl,
-      @required this.isScratched});
+      @required this.isUnlocked});
   factory MoorMovie.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -60,8 +60,8 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
           .mapFromDatabaseResponse(data['${effectivePrefix}poster_url']),
       rewordUrl: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}reword_url']),
-      isScratched: boolType
-          .mapFromDatabaseResponse(data['${effectivePrefix}is_scratched']),
+      isUnlocked: boolType
+          .mapFromDatabaseResponse(data['${effectivePrefix}is_unlocked']),
     );
   }
   @override
@@ -100,8 +100,8 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
     if (!nullToAbsent || rewordUrl != null) {
       map['reword_url'] = Variable<String>(rewordUrl);
     }
-    if (!nullToAbsent || isScratched != null) {
-      map['is_scratched'] = Variable<bool>(isScratched);
+    if (!nullToAbsent || isUnlocked != null) {
+      map['is_unlocked'] = Variable<bool>(isUnlocked);
     }
     return map;
   }
@@ -134,9 +134,9 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
       rewordUrl: rewordUrl == null && nullToAbsent
           ? const Value.absent()
           : Value(rewordUrl),
-      isScratched: isScratched == null && nullToAbsent
+      isUnlocked: isUnlocked == null && nullToAbsent
           ? const Value.absent()
-          : Value(isScratched),
+          : Value(isUnlocked),
     );
   }
 
@@ -155,7 +155,7 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
       watchedDate: serializer.fromJson<DateTime>(json['watchedDate']),
       posterUrl: serializer.fromJson<String>(json['posterUrl']),
       rewordUrl: serializer.fromJson<String>(json['rewordUrl']),
-      isScratched: serializer.fromJson<bool>(json['isScratched']),
+      isUnlocked: serializer.fromJson<bool>(json['isUnlocked']),
     );
   }
   @override
@@ -173,7 +173,7 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
       'watchedDate': serializer.toJson<DateTime>(watchedDate),
       'posterUrl': serializer.toJson<String>(posterUrl),
       'rewordUrl': serializer.toJson<String>(rewordUrl),
-      'isScratched': serializer.toJson<bool>(isScratched),
+      'isUnlocked': serializer.toJson<bool>(isUnlocked),
     };
   }
 
@@ -189,7 +189,7 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
           DateTime watchedDate,
           String posterUrl,
           String rewordUrl,
-          bool isScratched}) =>
+          bool isUnlocked}) =>
       MoorMovie(
         id: id ?? this.id,
         title: title ?? this.title,
@@ -202,7 +202,7 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
         watchedDate: watchedDate ?? this.watchedDate,
         posterUrl: posterUrl ?? this.posterUrl,
         rewordUrl: rewordUrl ?? this.rewordUrl,
-        isScratched: isScratched ?? this.isScratched,
+        isUnlocked: isUnlocked ?? this.isUnlocked,
       );
   @override
   String toString() {
@@ -218,7 +218,7 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
           ..write('watchedDate: $watchedDate, ')
           ..write('posterUrl: $posterUrl, ')
           ..write('rewordUrl: $rewordUrl, ')
-          ..write('isScratched: $isScratched')
+          ..write('isUnlocked: $isUnlocked')
           ..write(')'))
         .toString();
   }
@@ -245,7 +245,7 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
                                       $mrjc(
                                           posterUrl.hashCode,
                                           $mrjc(rewordUrl.hashCode,
-                                              isScratched.hashCode))))))))))));
+                                              isUnlocked.hashCode))))))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -261,7 +261,7 @@ class MoorMovie extends DataClass implements Insertable<MoorMovie> {
           other.watchedDate == this.watchedDate &&
           other.posterUrl == this.posterUrl &&
           other.rewordUrl == this.rewordUrl &&
-          other.isScratched == this.isScratched);
+          other.isUnlocked == this.isUnlocked);
 }
 
 class MoorMoviesCompanion extends UpdateCompanion<MoorMovie> {
@@ -276,7 +276,7 @@ class MoorMoviesCompanion extends UpdateCompanion<MoorMovie> {
   final Value<DateTime> watchedDate;
   final Value<String> posterUrl;
   final Value<String> rewordUrl;
-  final Value<bool> isScratched;
+  final Value<bool> isUnlocked;
   const MoorMoviesCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
@@ -289,7 +289,7 @@ class MoorMoviesCompanion extends UpdateCompanion<MoorMovie> {
     this.watchedDate = const Value.absent(),
     this.posterUrl = const Value.absent(),
     this.rewordUrl = const Value.absent(),
-    this.isScratched = const Value.absent(),
+    this.isUnlocked = const Value.absent(),
   });
   MoorMoviesCompanion.insert({
     this.id = const Value.absent(),
@@ -303,7 +303,7 @@ class MoorMoviesCompanion extends UpdateCompanion<MoorMovie> {
     this.watchedDate = const Value.absent(),
     this.posterUrl = const Value.absent(),
     this.rewordUrl = const Value.absent(),
-    this.isScratched = const Value.absent(),
+    this.isUnlocked = const Value.absent(),
   })  : title = Value(title),
         year = Value(year),
         category = Value(category),
@@ -323,7 +323,7 @@ class MoorMoviesCompanion extends UpdateCompanion<MoorMovie> {
     Expression<DateTime> watchedDate,
     Expression<String> posterUrl,
     Expression<String> rewordUrl,
-    Expression<bool> isScratched,
+    Expression<bool> isUnlocked,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -337,7 +337,7 @@ class MoorMoviesCompanion extends UpdateCompanion<MoorMovie> {
       if (watchedDate != null) 'watched_date': watchedDate,
       if (posterUrl != null) 'poster_url': posterUrl,
       if (rewordUrl != null) 'reword_url': rewordUrl,
-      if (isScratched != null) 'is_scratched': isScratched,
+      if (isUnlocked != null) 'is_unlocked': isUnlocked,
     });
   }
 
@@ -353,7 +353,7 @@ class MoorMoviesCompanion extends UpdateCompanion<MoorMovie> {
       Value<DateTime> watchedDate,
       Value<String> posterUrl,
       Value<String> rewordUrl,
-      Value<bool> isScratched}) {
+      Value<bool> isUnlocked}) {
     return MoorMoviesCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
@@ -366,7 +366,7 @@ class MoorMoviesCompanion extends UpdateCompanion<MoorMovie> {
       watchedDate: watchedDate ?? this.watchedDate,
       posterUrl: posterUrl ?? this.posterUrl,
       rewordUrl: rewordUrl ?? this.rewordUrl,
-      isScratched: isScratched ?? this.isScratched,
+      isUnlocked: isUnlocked ?? this.isUnlocked,
     );
   }
 
@@ -406,8 +406,8 @@ class MoorMoviesCompanion extends UpdateCompanion<MoorMovie> {
     if (rewordUrl.present) {
       map['reword_url'] = Variable<String>(rewordUrl.value);
     }
-    if (isScratched.present) {
-      map['is_scratched'] = Variable<bool>(isScratched.value);
+    if (isUnlocked.present) {
+      map['is_unlocked'] = Variable<bool>(isUnlocked.value);
     }
     return map;
   }
@@ -547,14 +547,12 @@ class $MoorMoviesTable extends MoorMovies
             'https://i.pinimg.com/236x/6a/df/47/6adf47f699905fff05f17550115bd47c--pulp-fiction-poster-pulp-fiction-illustration.jpg'));
   }
 
-  final VerificationMeta _isScratchedMeta =
-      const VerificationMeta('isScratched');
-  GeneratedBoolColumn _isScratched;
+  final VerificationMeta _isUnlockedMeta = const VerificationMeta('isUnlocked');
+  GeneratedBoolColumn _isUnlocked;
   @override
-  GeneratedBoolColumn get isScratched =>
-      _isScratched ??= _constructIsScratched();
-  GeneratedBoolColumn _constructIsScratched() {
-    return GeneratedBoolColumn('is_scratched', $tableName, false,
+  GeneratedBoolColumn get isUnlocked => _isUnlocked ??= _constructIsUnlocked();
+  GeneratedBoolColumn _constructIsUnlocked() {
+    return GeneratedBoolColumn('is_unlocked', $tableName, false,
         defaultValue: const Constant(false));
   }
 
@@ -571,7 +569,7 @@ class $MoorMoviesTable extends MoorMovies
         watchedDate,
         posterUrl,
         rewordUrl,
-        isScratched
+        isUnlocked
       ];
   @override
   $MoorMoviesTable get asDslTable => this;
@@ -645,11 +643,11 @@ class $MoorMoviesTable extends MoorMovies
       context.handle(_rewordUrlMeta,
           rewordUrl.isAcceptableOrUnknown(data['reword_url'], _rewordUrlMeta));
     }
-    if (data.containsKey('is_scratched')) {
+    if (data.containsKey('is_unlocked')) {
       context.handle(
-          _isScratchedMeta,
-          isScratched.isAcceptableOrUnknown(
-              data['is_scratched'], _isScratchedMeta));
+          _isUnlockedMeta,
+          isUnlocked.isAcceptableOrUnknown(
+              data['is_unlocked'], _isUnlockedMeta));
     }
     return context;
   }

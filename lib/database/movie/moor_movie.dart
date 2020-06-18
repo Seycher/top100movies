@@ -26,5 +26,5 @@ class MoorMovies extends Table {
   TextColumn get rewordUrl => text().withDefault(const Constant(
       'https://i.pinimg.com/236x/6a/df/47/6adf47f699905fff05f17550115bd47c--pulp-fiction-poster-pulp-fiction-illustration.jpg'))();
 
-  BoolColumn get isScratched => boolean().withDefault(const Constant(false))();
+  BoolColumn get isUnlocked => boolean().withDefault(const Constant(false))();
 }

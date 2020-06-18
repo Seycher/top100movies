@@ -12,7 +12,7 @@ class Movie {
   final DateTime time;
   final String posterUrl;
   final String rewardUrl;
-  final bool isScratched;
+  final bool isUnlocked;
 
   //TODO if you make any changes with values remember about generating new toString, and equals
 
@@ -28,7 +28,7 @@ class Movie {
     this.time,
     this.posterUrl,
     this.rewardUrl,
-    this.isScratched,
+    this.isUnlocked,
   );
 
   static Movie fromMoor(final MoorMovie moorMovies) {
@@ -44,13 +44,13 @@ class Movie {
       moorMovies.watchedDate,
       moorMovies.posterUrl,
       moorMovies.rewordUrl,
-      moorMovies.isScratched,
+      moorMovies.isUnlocked,
     );
   }
 
   @override
   String toString() {
-    return 'Movie{id: $id, title: $title, year: $year, category: $category, director: $director, duration: $duration, plot: $plot, encouragement: $encouragement, time: $time, posterUrl: $posterUrl, rewordUrl: $rewardUrl, isScratched: $isScratched}';
+    return 'Movie{id: $id, title: $title, year: $year, category: $category, director: $director, duration: $duration, plot: $plot, encouragement: $encouragement, time: $time, posterUrl: $posterUrl, rewordUrl: $rewardUrl, isUnlocked: $isUnlocked}';
   }
 
   @override
@@ -69,7 +69,7 @@ class Movie {
           time == other.time &&
           posterUrl == other.posterUrl &&
           rewardUrl == other.rewardUrl &&
-          isScratched == other.isScratched;
+          isUnlocked == other.isUnlocked;
 
   @override
   int get hashCode =>
@@ -84,5 +84,5 @@ class Movie {
       time.hashCode ^
       posterUrl.hashCode ^
       rewardUrl.hashCode ^
-      isScratched.hashCode;
+      isUnlocked.hashCode;
 }

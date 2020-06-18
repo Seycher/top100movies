@@ -1,6 +1,5 @@
 import 'package:applaca/bloc/reward/reward_event.dart';
 import 'package:applaca/bloc/reward/reward_state.dart';
-import 'package:applaca/repository/movie.dart';
 import 'package:applaca/repository/movie_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,7 +23,7 @@ class RewardBloc extends Bloc<RewardEvent, RewardState> {
 
   Future<RewardState> _onMovieDetailsRequested(
       RewardRequestedEvent event) async {
-    final Movie movie = await _movieRepository.getSingleMovie(movieTitle);
+    final movie = await _movieRepository.getSingleMovieByTitle(movieTitle);
 
     if (movie != null) {
       return RewardAvailableState(
@@ -34,7 +33,7 @@ class RewardBloc extends Bloc<RewardEvent, RewardState> {
         category: movie.category,
         year: movie.year,
         length: movie.duration,
-        description: movie.encouragement,
+        description: movie.plot,
       );
     } else {
       return NoRewardAvailableState();

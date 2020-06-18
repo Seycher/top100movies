@@ -1,12 +1,12 @@
 import 'package:applaca/services/internationalization/app_localizations_delegate.dart';
 import 'package:applaca/services/internationalization/supported_languages.dart';
+import 'package:applaca/ui/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../services/dependency_injection/injection.dart';
 import '../services/internationalization/app_localizations.dart';
-import 'pages/home.dart';
 
 class Application extends StatelessWidget {
   @override

@@ -15,7 +15,9 @@ void configureDependencies() {
 }
 
 void manualSetupForService() {
-  getIt.registerLazySingletonAsync(() => SharedPreferences.getInstance());
+  getIt.registerSingletonAsync<SharedPreferences>(() async {
+    return await SharedPreferences.getInstance();
+  });
   getIt.registerLazySingleton<GlobalKey<NavigatorState>>(() {
     return GlobalKey<NavigatorState>();
   });

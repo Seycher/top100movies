@@ -3,9 +3,7 @@ import 'dart:convert';
 import 'package:applaca/services/internationalization/supported_languages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:injectable/injectable.dart';
 
-@lazySingleton
 class AppLocalizations {
   final Locale locale;
 

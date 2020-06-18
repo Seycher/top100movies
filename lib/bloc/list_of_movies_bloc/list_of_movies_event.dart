@@ -7,19 +7,10 @@ abstract class ListOfMoviesEvent extends Equatable {
   const ListOfMoviesEvent();
 }
 
-class PrizeUnlockedEvent extends ListOfMoviesEvent {
-  final Movie movie;
-
-  const PrizeUnlockedEvent(this.movie);
-
-  @override
-  List<Object> get props => [movie];
-}
-
-class ScreenInitializedEvent extends ListOfMoviesEvent {
+class DataReceivedEvent extends ListOfMoviesEvent {
   final List<Movie> listOfMovies;
 
-  const ScreenInitializedEvent(this.listOfMovies);
+  const DataReceivedEvent(this.listOfMovies);
 
   @override
   List<Object> get props => [listOfMovies];
@@ -34,15 +25,8 @@ class MovieClickedEvent extends ListOfMoviesEvent {
   List<Object> get props => [title];
 }
 
-class ListenMoviesEvent extends ListOfMoviesEvent {
-  const ListenMoviesEvent();
-
-  @override
-  List<Object> get props => [];
-}
-
-class LotteryIconClickedEvent extends ListOfMoviesEvent {
-  const LotteryIconClickedEvent();
+class ScreenInitializedEvent extends ListOfMoviesEvent {
+  const ScreenInitializedEvent();
 
   @override
   List<Object> get props => [];
