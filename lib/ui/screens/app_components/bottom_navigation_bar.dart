@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:applaca/bloc/bottom_navigation_bar_bloc/bottom_navigation_bar_bloc.dart';
 import 'package:applaca/bloc/bottom_navigation_bar_bloc/bottom_navigation_bar_event.dart';
 import 'package:applaca/bloc/no_state.dart';
@@ -14,54 +16,42 @@ class BottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => BottomNavigationBarBloc(
-        getIt<GlobalKey<NavigatorState>>(),
-        getIt<SharedPreferencesRepository>(),
-      ),
+      create: (BuildContext context) =>
+          BottomNavigationBarBloc(
+            getIt<GlobalKey<NavigatorState>>(),
+            getIt<SharedPreferencesRepository>(),
+          ),
       child: BlocBuilder<BottomNavigationBarBloc, NoState>(
         builder: (context, state) {
-          final _bottomNavigationBarBloc =
-              BlocProvider.of<BottomNavigationBarBloc>(context);
-          return BottomNavigationBar(
-            currentIndex: index,
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.grey[700],
-            backgroundColor: Colors.grey[900],
-            items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Transform.rotate(
-                  angle: 1.55,
+          final _bloc = BlocProvider.of<BottomNavigationBarBloc>(context);
+          return Container(
+            height: 64,
+            color: Colors.grey[900],
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Transform.rotate(
+                  angle: pi / 2,
                   child: IconButton(
+                    color: index == 0 ? Colors.white : Colors.grey[700],
                     icon: Icon(
                       Icons.local_movies,
                       size: 32,
                     ),
-                    onPressed: () => _bottomNavigationBarBloc.add(
-                      LotteryButtonClickedEvent(),
-                    ),
+                    onPressed: () => _bloc.add(LotteryButtonClickedEvent()),
                   ),
                 ),
-                title: Text(
-                  "",
-                  style: TextStyle(fontSize: 0),
-                ),
-              ),
-              BottomNavigationBarItem(
-                icon: IconButton(
+                SizedBox(width: 8),
+                IconButton(
+                  color: index == 1 ? Colors.white : Colors.grey[700],
                   icon: Icon(
                     Icons.list,
                     size: 32,
                   ),
-                  onPressed: () => _bottomNavigationBarBloc.add(
-                    ListButtonClickedEvent(),
-                  ),
+                  onPressed: () => _bloc.add(ListButtonClickedEvent()),
                 ),
-                title: Text(
-                  "",
-                  style: TextStyle(fontSize: 0),
-                ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),
