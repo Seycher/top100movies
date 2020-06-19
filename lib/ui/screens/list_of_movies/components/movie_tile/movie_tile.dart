@@ -37,7 +37,23 @@ class MovieTile extends StatelessWidget {
           height: 180,
           child: Stack(
             children: <Widget>[
-
+              isUnlocked
+                  ? unlockedTile(
+                title: title,
+                category: category,
+                year: year,
+                duration: duration,
+                rewardUrl: rewardUrl,
+                time: time,
+              )
+                  : lockedTile(
+                title: title,
+                category: category,
+                year: year,
+                duration: duration,
+                posterUrl: posterUrl,
+              ),
+              isUnlocked ? Container() : _lockedMovieShadow(),
             ],
           ),
         ),
