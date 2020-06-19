@@ -12,6 +12,7 @@ Widget listOfMovies(
   return ListView.builder(
     itemBuilder: (BuildContext context, int index) {
       final movie = listOfMovies[index];
+      print(movie.isUnlocked);
       return MovieTile(
         title: movie.title,
         year: movie.year,
