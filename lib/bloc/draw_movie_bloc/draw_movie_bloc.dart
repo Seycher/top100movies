@@ -55,13 +55,20 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
   }
 
   Future<DrawMovieState> _getRandomMovie() async {
-    //TODO write a drawing algorithm
+    final currentMovieId = _sharedPreferences.getCurrentFilmId();
+    final lockedMovieList = await _movieRepository.getAllMovies();
+    final list = lockedMovieList.where((movie) => !movie.isUnlocked);
+    final randomMovie = list.elementAt(Random().nextInt(list.length));
 
-    final id = Random().nextInt(4) + 1;
+    if (currentMovieId == null) {
+      _sharedPreferences.setCurrentFilmId(randomMovie.id);
+    } else if (randomMovie.id != currentMovieId) {
+      _sharedPreferences.setCurrentFilmId(randomMovie.id);
+    } else if (randomMovie.id == currentMovieId) {
+      this.add(DrawAgainButtonPressedEvent());
+    }
 
-    _sharedPreferences.setCurrentFilmId(id);
-
-    return await _drawMovie(id);
+    return await _drawMovie(randomMovie.id);
   }
 
   Future<DrawMovieState> _drawMovie(final int id) async {
