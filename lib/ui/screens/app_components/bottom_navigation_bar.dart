@@ -16,16 +16,17 @@ class BottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) =>
-          BottomNavigationBarBloc(
-            getIt<GlobalKey<NavigatorState>>(),
-            getIt<SharedPreferencesRepository>(),
-          ),
+      create: (BuildContext context) {
+        return BottomNavigationBarBloc(
+          getIt<GlobalKey<NavigatorState>>(),
+          getIt<SharedPreferencesRepository>(),
+        );
+      },
       child: BlocBuilder<BottomNavigationBarBloc, NoState>(
         builder: (context, state) {
           final _bloc = BlocProvider.of<BottomNavigationBarBloc>(context);
           return Container(
-            height: 64,
+            height: MediaQuery.of(context).size.height / 9.5,
             color: Colors.grey[900],
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -36,7 +37,7 @@ class BottomNavigation extends StatelessWidget {
                     color: index == 0 ? Colors.white : Colors.grey[700],
                     icon: Icon(
                       Icons.local_movies,
-                      size: 32,
+                      size: MediaQuery.of(context).size.height / 18,
                     ),
                     onPressed: () => _bloc.add(LotteryButtonClickedEvent()),
                   ),
@@ -46,7 +47,7 @@ class BottomNavigation extends StatelessWidget {
                   color: index == 1 ? Colors.white : Colors.grey[700],
                   icon: Icon(
                     Icons.list,
-                    size: 32,
+                    size: MediaQuery.of(context).size.height / 18,
                   ),
                   onPressed: () => _bloc.add(ListButtonClickedEvent()),
                 ),
