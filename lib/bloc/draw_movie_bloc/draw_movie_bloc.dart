@@ -28,43 +28,58 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
   Stream<DrawMovieState> mapEventToState(
     DrawMovieEvent event,
   ) async* {
-    if (event is ShuffleButtonPressedEvent) {
-      yield await _checkIfMovieIsDrawnAndGetMovie();
+    if (event is SelectTheInitialState) {
+      yield await _selectInitialState();
+    } else if (event is ShuffleButtonPressedEvent) {
+      yield await _drawMovie();
     } else if (event is ChallengeAcceptedButtonPressedEvent) {
-      yield await _acceptChallenge(event);
+      yield await _acceptChallenge();
     } else if (event is DrawAgainButtonPressedEvent) {
-      yield await _getRandomMovie();
+      yield await _drawNewMovie();
     } else if (event is SawItButtonPressedEvent) {
       await _unlockReward();
     } else if (event is ChallengeCompletedButtonPressedEvent) {
       await _unlockReward();
     } else if (event is ResignationButtonPressedEvent) {
       _removeMovieFromChallenge();
-      yield await _getRandomMovie();
+      yield await _drawNewMovie();
     }
   }
 
-  Future<DrawMovieState> _checkIfMovieIsDrawnAndGetMovie() async {
+  Future<DrawMovieState> _selectInitialState() async {
+    final movieId = _sharedPreferences.getCurrentFilmId();
+    final movieData = _sharedPreferences.getCurrentFilmDateTime();
+
+    if (movieId == null) {
+      return DrawMovieHomeState();
+    } else if (movieData == null) {
+      return await _drawMovie();
+    } else {
+      return await _acceptChallenge();
+    }
+  }
+
+  Future<DrawMovieState> _drawMovie() async {
     final movieId = _sharedPreferences.getCurrentFilmId();
 
     if (movieId == null) {
-      return await _getRandomMovie();
+      return await _drawNewMovie();
     } else {
-      return await _drawMovie(movieId);
+      return await _drawPreviousMovie(movieId);
     }
   }
 
-  Future<DrawMovieState> _getRandomMovie() async {
+  Future<DrawMovieState> _drawNewMovie() async {
     //TODO write a drawing algorithm
 
     final id = Random().nextInt(4) + 1;
 
     _sharedPreferences.setCurrentFilmId(id);
 
-    return await _drawMovie(id);
+    return await _drawPreviousMovie(id);
   }
 
-  Future<DrawMovieState> _drawMovie(final int id) async {
+  Future<DrawMovieState> _drawPreviousMovie(final int id) async {
     final movie = await _movieRepository.getSingleMovieById(id);
 
     return MovieDrawnState(
@@ -78,10 +93,10 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
     );
   }
 
-  Future<ChallengeAcceptedState> _acceptChallenge(
-    final ChallengeAcceptedButtonPressedEvent event,
-  ) async {
-    _sharedPreferences.setCurrentFilmDateTime(DateTime.now());
+  Future<ChallengeAcceptedState> _acceptChallenge() async {
+    if (_sharedPreferences.getCurrentFilmDateTime() == null) {
+      _sharedPreferences.setCurrentFilmDateTime(DateTime.now());
+    }
 
     final movieId = _sharedPreferences.getCurrentFilmId();
 
@@ -117,6 +132,6 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
 
   void _removeMovieFromChallenge() {
     _sharedPreferences.setCurrentFilmId(null);
-    _sharedPreferences.setCurrentFilmDateTime(DateTime(1));
+    _sharedPreferences.setCurrentFilmDateTime(null);
   }
 }

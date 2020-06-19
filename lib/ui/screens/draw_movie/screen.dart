@@ -1,5 +1,7 @@
 import 'package:applaca/bloc/draw_movie_bloc/draw_movie_bloc.dart';
+import 'package:applaca/bloc/draw_movie_bloc/draw_movie_event.dart';
 import 'package:applaca/bloc/draw_movie_bloc/draw_movie_state.dart';
+import 'package:applaca/ui/screens/app_components/loading_indicator_view.dart';
 import 'package:applaca/ui/screens/draw_movie/views/challenge_accepted.dart';
 import 'package:applaca/ui/screens/draw_movie/views/draw_home.dart';
 import 'package:applaca/ui/screens/draw_movie/views/draw_movie.dart';
@@ -29,6 +31,9 @@ class DrawMovieScreen extends StatelessWidget {
     final BuildContext context,
   ) {
     if (state is InitialDrawMovieState) {
+      bloc.add(SelectTheInitialState());
+      return buildLoadingIndicatorView();
+    } else if (state is DrawMovieHomeState) {
       return buildDrawHomeView(bloc, context);
     } else if (state is MovieDrawnState) {
       return buildDrawnMovieView(bloc, state, context);

@@ -9,7 +9,6 @@ const String _isOnboardingCompleted = 'isOnboardingCompleted';
 const String _currentFilmId = 'currentFilmId';
 const String _currentFilmDateTime = 'currentFilmDate';
 const int filmId = 1;
-final DateTime filmWatchedDateTimeOnError = DateTime(1997);
 final DateTime filmWatchedDateTime = DateTime.now();
 
 SharedPreferencesMock _sharedPreferencesMock;
@@ -96,7 +95,7 @@ main() {
       () {
     final result = _sharedPreferencesRepository.getCurrentFilmDateTime();
 
-    expect(result, filmWatchedDateTimeOnError);
+    expect(result, null);
   });
 
   test('getCurrentFilmDateTime() returns data from SharedPreferences', () {

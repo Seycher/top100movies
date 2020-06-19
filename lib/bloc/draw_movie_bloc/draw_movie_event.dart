@@ -4,6 +4,13 @@ abstract class DrawMovieEvent extends Equatable {
   const DrawMovieEvent();
 }
 
+class SelectTheInitialState extends DrawMovieEvent {
+  @override
+  List<Object> get props => [];
+
+  const SelectTheInitialState();
+}
+
 class ShuffleButtonPressedEvent extends DrawMovieEvent {
   @override
   List<Object> get props => [];
