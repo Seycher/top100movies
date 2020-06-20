@@ -47,6 +47,7 @@ main() {
     build: () async => ListOfMoviesBloc(_repository, _navigator, _prefRepo),
     expect: [],
   );
+
   blocTest(
     'ListOfMoviesBloc calls watchAllMoviesData on repo when ScreenInitializedEvent is added',
     build: () async => ListOfMoviesBloc(_repository, _navigator, _prefRepo),

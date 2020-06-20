@@ -3,6 +3,7 @@ import 'package:applaca/services/dependency_injection/injection.dart';
 import 'package:applaca/ui/screens/unlock_reward/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scratcher/widgets.dart';
 
 class UnlockRewardRoute extends PopupRoute {
   final child;
@@ -33,6 +34,7 @@ class UnlockRewardRoute extends PopupRoute {
         create: (BuildContext context) => UnlockRewardBloc(
           getIt<GlobalKey<NavigatorState>>(),
           rewardURL,
+          GlobalKey<ScratcherState>(),
         ),
         child: UnlockRewardScreen(),
       ),

@@ -1,7 +1,6 @@
 import 'package:applaca/bloc/unlock_reward/unlock_reward_bloc.dart';
 import 'package:applaca/bloc/unlock_reward/unlock_reward_event.dart';
 import 'package:applaca/bloc/unlock_reward/unlock_reward_state.dart';
-import 'package:applaca/services/dependency_injection/injection.dart';
 import 'package:applaca/services/internationalization/app_localizations.dart';
 import 'package:applaca/services/internationalization/localized_strings.dart';
 import 'package:applaca/ui/screens/app_components/button.dart';
@@ -12,12 +11,12 @@ import 'package:scratcher/widgets.dart';
 class UnlockRewardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final _scratcherBloc = BlocProvider.of<UnlockRewardBloc>(context);
+    final _unlockerBloc = BlocProvider.of<UnlockRewardBloc>(context);
     return BlocBuilder<UnlockRewardBloc, UnlockRewardState>(
       builder: (context, state) {
         return Material(
           color: Colors.white70,
-          child: _resolveState(context, _scratcherBloc, state),
+          child: _resolveState(context, _unlockerBloc, state),
         );
       },
     );
@@ -26,11 +25,11 @@ class UnlockRewardScreen extends StatelessWidget {
 
 Widget _resolveState(
   final BuildContext context,
-  final UnlockRewardBloc _scratcherBloc,
+  final UnlockRewardBloc _unlockerBloc,
   final UnlockRewardState state,
 ) {
-  if (state is InitialRewardScratcherState) {
-    _scratcherBloc.add(ScreenInitializedEvent());
+  if (state is InitialRewardUnlockerState) {
+    _unlockerBloc.add(ScreenInitializedEvent());
     return Container(
       color: Colors.black,
       child: Center(
@@ -40,36 +39,39 @@ Widget _resolveState(
         ),
       ),
     );
-  } else if (state is RewardNotScratchedState) {
+  } else if (state is RewardNotUnlockedState) {
     return _createScreenContent(
-      context,
-      _scratcherBloc,
-      AppLocalizations.of(context).translate(
+      context: context,
+      unlockerBloc: _unlockerBloc,
+      topText: AppLocalizations.of(context).translate(
           LocalizedStrings.Unlock_Reward_Screen_Congratulations_First),
-      state.rewardURL,
-      false,
+      rewardURL: state.rewardURL,
+      isVisible: false,
+      scratcherKey: state.scratcherKey,
     );
   } else if (state is RewardIsUnlockedState) {
     return _createScreenContent(
-      context,
-      _scratcherBloc,
-      AppLocalizations.of(context).translate(
+      context: context,
+      unlockerBloc: _unlockerBloc,
+      topText: AppLocalizations.of(context).translate(
           LocalizedStrings.Unlock_Reward_Screen_Congratulations_Second),
-      state.rewardURL,
-      true,
+      rewardURL: state.rewardURL,
+      isVisible: true,
+      scratcherKey: state.scratcherKey,
     );
   } else {
     return Container(color: Colors.red);
   }
 }
 
-Widget _createScreenContent(
+Widget _createScreenContent({
   final BuildContext context,
-  final UnlockRewardBloc _scratcherBloc,
+  final UnlockRewardBloc unlockerBloc,
   final String topText,
   final String rewardURL,
   final bool isVisible,
-) {
+  final GlobalKey<ScratcherState> scratcherKey,
+}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.center,
     mainAxisAlignment: MainAxisAlignment.center,
@@ -80,17 +82,15 @@ Widget _createScreenContent(
       ),
       SizedBox(height: 32),
       Scratcher(
-        key: getIt<GlobalKey<ScratcherState>>(),
+        key: scratcherKey,
         brushSize: 30,
         threshold: 60,
-        accuracy: ScratchAccuracy.low,
-        //set for better testing
+        accuracy: ScratchAccuracy.low, //set for better testing
         color: Colors.black,
         onThreshold: () {
-          getIt<GlobalKey<ScratcherState>>()
-              .currentState
+          scratcherKey.currentState
               .reveal(duration: const Duration(seconds: 1));
-          _scratcherBloc.add(RewardUnlockedEvent());
+          unlockerBloc.add(RewardUnlockedEvent());
         },
         child: Image.network(
           rewardURL,
@@ -118,7 +118,7 @@ Widget _createScreenContent(
               color: Colors.pink,
               text: AppLocalizations.of(context)
                   .translate(LocalizedStrings.Unlock_Reward_Screen_Claim),
-              function: () => _scratcherBloc.add(RewardClaimedEvent())),
+              function: () => unlockerBloc.add(RewardClaimedEvent())),
         ),
       )
     ],

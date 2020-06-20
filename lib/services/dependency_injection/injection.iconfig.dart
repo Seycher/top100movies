@@ -10,10 +10,6 @@ import 'package:applaca/database/movie/movie_dao.dart';
 import 'package:applaca/repository/movie_repository.dart';
 import 'package:applaca/repository/shared_preferences_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:applaca/bloc/unlock_reward/unlock_reward_bloc.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/navigator.dart';
-import 'package:applaca/bloc/bottom_navigation_bar_bloc/bottom_navigation_bar_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 void $initGetIt(GetIt g, {String environment}) {
@@ -25,8 +21,4 @@ void $initGetIt(GetIt g, {String environment}) {
       () => MovieRepository(g<MovieDao>()));
   g.registerLazySingleton<SharedPreferencesRepository>(
       () => SharedPreferencesRepository(g<SharedPreferences>()));
-  g.registerFactory<UnlockRewardBloc>(() => UnlockRewardBloc(
-      g<GlobalKey<NavigatorState>>(), g<String>(instanceName: 'rewardURL')));
-  g.registerFactory<BottomNavigationBarBloc>(() => BottomNavigationBarBloc(
-      g<GlobalKey<NavigatorState>>(), g<SharedPreferencesRepository>()));
 }
