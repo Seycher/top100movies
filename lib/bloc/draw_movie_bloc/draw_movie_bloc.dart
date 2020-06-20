@@ -14,6 +14,8 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
   final MovieRepository _movieRepository;
   final GlobalKey<NavigatorState> _navigator;
   final SharedPreferencesRepository _sharedPreferences;
+  final rejectedListOfMovie = [];
+  int index = 0;
 
   DrawMovieBloc(
     this._movieRepository,
@@ -59,15 +61,26 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
     }
   }
 
-  Future<DrawMovieState> _drawMovie() async {
-    final movieId = _sharedPreferences.getCurrentFilmId();
+  Future<DrawMovieState> _getRandomMovie() async {
+    final listOfMovie = await _movieRepository.getAllMovies();
+    final listOfLockedMovie = listOfMovie.where((movie) => !movie.isUnlocked);
+    final randomMovie = listOfLockedMovie
+        .elementAt((Random().nextInt((listOfLockedMovie.length))));
 
-    if (movieId == null) {
-      return await _drawNewMovie();
+    if (rejectedListOfMovie.contains(randomMovie)) return _getRandomMovie();
+
+    if (rejectedListOfMovie.length >= 10) {
+      if (index <= 9) {
+        rejectedListOfMovie.replaceRange(index, index + 1, [randomMovie]);
+        index++;
+      } else {
+        index = 0;
+      }
     } else {
-      return await _drawPreviousMovie(movieId);
+      rejectedListOfMovie.add(randomMovie);
     }
-  }
+    rejectedListOfMovie.forEach((element) => print(element));
+    _sharedPreferences.setCurrentFilmId(randomMovie.id);
 
   Future<DrawMovieState> _drawNewMovie() async {
     //TODO write a drawing algorithm

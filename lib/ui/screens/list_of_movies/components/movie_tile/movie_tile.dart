@@ -39,20 +39,20 @@ class MovieTile extends StatelessWidget {
             children: <Widget>[
               isUnlocked
                   ? unlockedTile(
-                title: title,
-                category: category,
-                year: year,
-                duration: duration,
-                rewardUrl: rewardUrl,
-                time: time,
-              )
+                      title: title,
+                      category: category,
+                      year: year,
+                      duration: duration,
+                      rewardUrl: rewardUrl,
+                      time: time,
+                    )
                   : lockedTile(
-                title: title,
-                category: category,
-                year: year,
-                duration: duration,
-                posterUrl: posterUrl,
-              ),
+                      title: title,
+                      category: category,
+                      year: year,
+                      duration: duration,
+                      posterUrl: posterUrl,
+                    ),
               isUnlocked ? Container() : _lockedMovieShadow(),
             ],
           ),

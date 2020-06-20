@@ -1,33 +1,31 @@
 import 'dart:math';
 
-import 'package:applaca/bloc/bottom_navigation_bar_bloc/bottom_navigation_bar_bloc.dart';
-import 'package:applaca/bloc/bottom_navigation_bar_bloc/bottom_navigation_bar_event.dart';
+import 'package:applaca/bloc/bottom_navigation_bar_bloc/bottom_navigation_bloc.dart';
+import 'package:applaca/bloc/bottom_navigation_bar_bloc/bottom_navigation_event.dart';
 import 'package:applaca/bloc/no_state.dart';
-import 'package:applaca/repository/shared_preferences_repository.dart';
 import 'package:applaca/services/dependency_injection/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 const kBarH = 9.5;
-const kIcon = 18;
+const kLotteryIcon = 21;
+const kListIcon = 18;
 
 class BottomNavigation extends StatelessWidget {
-  final int index;
+  final int currentIndex;
 
-  BottomNavigation(this.index);
+  BottomNavigation({this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) {
-        return BottomNavigationBarBloc(
+        return BottomNavigationBloc(
           getIt<GlobalKey<NavigatorState>>(),
-          getIt<SharedPreferencesRepository>(),
         );
       },
-      child: BlocBuilder<BottomNavigationBarBloc, NoState>(
+      child: BlocBuilder<BottomNavigationBloc, NoState>(
         builder: (context, state) {
-          final _bloc = BlocProvider.of<BottomNavigationBarBloc>(context);
           return Container(
             height: MediaQuery.of(context).size.height / kBarH,
             color: Colors.grey[900],
@@ -36,20 +34,28 @@ class BottomNavigation extends StatelessWidget {
               children: <Widget>[
                 Transform.rotate(
                   angle: pi / 2,
-                  child: _navigationButton(
-                    onPressed: () => _bloc.add(LotteryButtonClickedEvent()),
+                  child: _buildNavigationButton(
                     context: context,
-                    currentIndex: 0,
+                    index: 0,
+                    iconSize: kLotteryIcon,
                     icon: Icons.local_movies,
+                    onPressed: () {
+                      return BlocProvider.of<BottomNavigationBloc>(context)
+                          .add(LotteryButtonClickedEvent());
+                    },
                   ),
                 ),
                 SizedBox(width: 8),
-                _navigationButton(
-                  onPressed: () => _bloc.add(ListButtonClickedEvent()),
+                _buildNavigationButton(
                   context: context,
-                  currentIndex: 1,
+                  index: 1,
+                  iconSize: kListIcon,
                   icon: Icons.list,
-                )
+                  onPressed: () {
+                    return BlocProvider.of<BottomNavigationBloc>(context)
+                        .add(ListButtonClickedEvent());
+                  },
+                ),
               ],
             ),
           );
@@ -58,15 +64,16 @@ class BottomNavigation extends StatelessWidget {
     );
   }
 
-  Widget _navigationButton({
+  Widget _buildNavigationButton({
     final context,
-    final currentIndex,
+    final index,
     final icon,
+    final iconSize,
     final onPressed,
   }) {
     return IconButton(
-      color: index == currentIndex ? Colors.white : Colors.grey[700],
-      icon: Icon(icon, size: MediaQuery.of(context).size.height / kIcon),
+      color: currentIndex == index ? Colors.white : Colors.grey[700],
+      icon: Icon(icon, size: MediaQuery.of(context).size.height / iconSize),
       onPressed: onPressed,
     );
   }
