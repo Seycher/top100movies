@@ -14,6 +14,8 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
   final MovieRepository _movieRepository;
   final GlobalKey<NavigatorState> _navigator;
   final SharedPreferencesRepository _sharedPreferences;
+  final rejectedListOfMovie = [];
+  int index = 0;
 
   DrawMovieBloc(
     this._movieRepository,
@@ -55,18 +57,25 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
   }
 
   Future<DrawMovieState> _getRandomMovie() async {
-    final currentMovieId = _sharedPreferences.getCurrentFilmId();
-    final lockedMovieList = await _movieRepository.getAllMovies();
-    final list = lockedMovieList.where((movie) => !movie.isUnlocked);
-    final randomMovie = list.elementAt(Random().nextInt(list.length));
+    final listOfMovie = await _movieRepository.getAllMovies();
+    final listOfLockedMovie = listOfMovie.where((movie) => !movie.isUnlocked);
+    final randomMovie = listOfLockedMovie
+        .elementAt((Random().nextInt((listOfLockedMovie.length))));
 
-    if (currentMovieId == null) {
-      _sharedPreferences.setCurrentFilmId(randomMovie.id);
-    } else if (randomMovie.id != currentMovieId) {
-      _sharedPreferences.setCurrentFilmId(randomMovie.id);
-    } else if (randomMovie.id == currentMovieId) {
-      this.add(DrawAgainButtonPressedEvent());
+    if (rejectedListOfMovie.contains(randomMovie)) return _getRandomMovie();
+
+    if (rejectedListOfMovie.length >= 10) {
+      if (index <= 9) {
+        rejectedListOfMovie.replaceRange(index, index + 1, [randomMovie]);
+        index++;
+      } else {
+        index = 0;
+      }
+    } else {
+      rejectedListOfMovie.add(randomMovie);
     }
+    rejectedListOfMovie.forEach((element) => print(element));
+    _sharedPreferences.setCurrentFilmId(randomMovie.id);
 
     return await _drawMovie(randomMovie.id);
   }

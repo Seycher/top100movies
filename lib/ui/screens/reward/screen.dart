@@ -1,7 +1,7 @@
 import 'package:applaca/bloc/reward/reward_bloc.dart';
 import 'package:applaca/bloc/reward/reward_event.dart';
 import 'package:applaca/bloc/reward/reward_state.dart';
-import 'package:applaca/ui/screens/app_components/bottom_navigation_bar.dart';
+import 'package:applaca/ui/screens/app_components/bottom_navigation.dart';
 import 'package:applaca/ui/screens/app_components/loading_indicator_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +19,7 @@ class RewardScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.black,
           body: _resolveState(_detailsBloc, state),
-          bottomNavigationBar: BottomNavigation(1),
+          bottomNavigationBar: BottomNavigation(currentIndex: 1),
         );
       },
     );
