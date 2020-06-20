@@ -68,13 +68,11 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
       if (index <= 9) {
         rejectedListOfMovie.replaceRange(index, index + 1, [randomMovie]);
         index++;
-      } else {
+      } else
         index = 0;
-      }
-    } else {
+    } else
       rejectedListOfMovie.add(randomMovie);
-    }
-    rejectedListOfMovie.forEach((element) => print(element));
+
     _sharedPreferences.setCurrentFilmId(randomMovie.id);
 
     return await _drawMovie(randomMovie.id);
