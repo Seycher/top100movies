@@ -21,7 +21,7 @@ class SharedPreferencesRepository {
 
   void setCurrentFilmDateTime(final DateTime newCurrentFilmDateTime) {
     _prefs.setString(
-        _currentFilmDateTime, newCurrentFilmDateTime.toIso8601String());
+        _currentFilmDateTime, newCurrentFilmDateTime?.toIso8601String());
   }
 
   bool isOnboardingCompleted() {
@@ -33,7 +33,12 @@ class SharedPreferencesRepository {
   }
 
   DateTime getCurrentFilmDateTime() {
-    return DateTime.parse(_prefs.getString(_currentFilmDateTime) ??
-        DateTime(1997).toIso8601String());
+    final date = _prefs.getString(_currentFilmDateTime);
+
+    if (date == null) {
+      return null;
+    } else {
+      return DateTime.parse(_prefs.getString(_currentFilmDateTime));
+    }
   }
 }

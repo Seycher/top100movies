@@ -75,17 +75,6 @@ main() {
     ],
   );
 
-  //TODO add missing tests that base their outcome on random value
-  blocTest(
-    'DrawMovieBloc calls getCurrentFilmId() and getCurrentFilmDateTime() on _prefRepo when added OnChallengeAcceptedButtonClickedEvent',
-    build: () async => DrawMovieBloc(_repository, _navigator, _prefRepo),
-    act: (bloc) => bloc.add(ChallengeAcceptedButtonPressedEvent()),
-    verify: (_) async {
-      verify(_prefRepo.getCurrentFilmId()).called(1);
-      verify(_prefRepo.getCurrentFilmDateTime()).called(1);
-    },
-  );
-
   blocTest(
     'DrawMovieBloc emits ChallengeAcceptedState when added OnChallengeAcceptedButtonClickedEvent',
     build: () async {
@@ -109,16 +98,6 @@ main() {
         timeLeft: Duration(hours: 24),
       )
     ],
-  );
-
-  blocTest(
-    'DrawMovieBloc calls getCurrentFilmId() and getCurrentFilmDateTime() on _prefRepo when added OnChallengeAcceptedButtonClickedEvent',
-    build: () async => DrawMovieBloc(_repository, _navigator, _prefRepo),
-    act: (bloc) => bloc.add(ChallengeAcceptedButtonPressedEvent()),
-    verify: (_) async {
-      verify(_prefRepo.getCurrentFilmId()).called(1);
-      verify(_prefRepo.getCurrentFilmDateTime()).called(1);
-    },
   );
 
 //some tests can not be done cos of random value inside private function

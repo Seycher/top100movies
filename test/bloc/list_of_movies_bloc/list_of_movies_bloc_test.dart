@@ -11,7 +11,6 @@ import '../../mocks/movie_repository_mock.dart';
 import '../../mocks/shared_preferences_repository_mock.dart';
 import '../../repository/movie_repository_test.dart';
 
-
 const int id = 1;
 const String movieTitle = 'title';
 const int year = 1;
@@ -37,6 +36,10 @@ main() {
     _repository = MovieRepositoryMock();
     _navigator = GlobalKey<NavigatorState>();
     _prefRepo = SharedPreferencesRepositoryMock();
+
+    when(_repository.watchAllMoviesData()).thenAnswer(
+      (_) => Stream.value(listOfMovies.toList()),
+    );
   });
 
   blocTest(
@@ -45,24 +48,21 @@ main() {
     expect: [],
   );
   blocTest(
-    'ListOfMoviesBloc calls watchAllMoviesData on repo when ListenMoviesEvent is added',
-    build: () async {
-      when(_repository.watchAllMoviesData()).thenAnswer(
-        (_) => Stream.value(listOfMovies.toList()),
-      );
-      return ListOfMoviesBloc(_repository, _navigator, _prefRepo);
-    },
+    'ListOfMoviesBloc calls watchAllMoviesData on repo when ScreenInitializedEvent is added',
+    build: () async => ListOfMoviesBloc(_repository, _navigator, _prefRepo),
     act: (bloc) => bloc.add(ScreenInitializedEvent()),
     verify: (_) async => verify(_repository.watchAllMoviesData()).called(1),
   );
+
   blocTest(
-    'ListOfMoviesBloc emits NoMoviesAvailableState when ScreenInitializedEvent is added with empty List',
+    'ListOfMoviesBloc emits NoMoviesAvailableState when DataReceivedEvent is added with empty List',
     build: () async => ListOfMoviesBloc(_repository, _navigator, _prefRepo),
     act: (bloc) => bloc.add(DataReceivedEvent(emptyMovieList)),
     expect: [NoMoviesAvailableState()],
   );
+
   blocTest(
-    'ListOfMoviesBloc emits MoviesAvailableState when ScreenInitializedEvent is added with List of Movies',
+    'ListOfMoviesBloc emits MoviesAvailableState when DataReceivedEvent is added with List of Movies',
     build: () async => ListOfMoviesBloc(_repository, _navigator, _prefRepo),
     act: (bloc) => bloc.add(DataReceivedEvent(movieList)),
     expect: [MoviesAvailableState(movieList, null)],

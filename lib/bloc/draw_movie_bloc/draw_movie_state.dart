@@ -7,6 +7,15 @@ abstract class DrawMovieState extends Equatable {
 class InitialDrawMovieState extends DrawMovieState {
   @override
   List<Object> get props => [];
+
+  const InitialDrawMovieState();
+}
+
+class DrawMovieHomeState extends DrawMovieState {
+  @override
+  List<Object> get props => [];
+
+  const DrawMovieHomeState();
 }
 
 class MovieDrawnState extends DrawMovieState {

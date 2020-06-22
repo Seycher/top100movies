@@ -31,6 +31,7 @@ class ListOfMoviesScreen extends StatelessWidget {
   ) {
     if (state is InitialListOfMoviesState) {
       listOfMoviesBloc.add(ScreenInitializedEvent());
+
       return buildLoadingIndicatorView();
     } else if (state is MoviesAvailableState) {
       return listOfMovies(
@@ -38,7 +39,7 @@ class ListOfMoviesScreen extends StatelessWidget {
         state.listOfMovies,
       );
     } else if (state is NoMoviesAvailableState) {
-      return Container(color: Colors.red);
+      return buildLoadingIndicatorView();
     }
 
     Logger().e('Unknown RewardState: ${state.runtimeType}.'
