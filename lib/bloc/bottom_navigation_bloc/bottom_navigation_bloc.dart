@@ -1,4 +1,4 @@
-import 'package:applaca/bloc/bottom_navigation_bar_bloc/bottom_navigation_event.dart';
+import 'package:applaca/bloc/bottom_navigation_bloc/bottom_navigation_event.dart';
 import 'package:applaca/bloc/no_state.dart';
 import 'package:applaca/ui/screens/draw_movie/navigation.dart';
 import 'package:applaca/ui/screens/list_of_movies/navigation.dart';

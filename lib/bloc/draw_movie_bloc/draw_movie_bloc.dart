@@ -14,8 +14,6 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
   final MovieRepository _movieRepository;
   final GlobalKey<NavigatorState> _navigator;
   final SharedPreferencesRepository _sharedPreferences;
-  final rejectedListOfMovie = [];
-  int index = 0;
 
   DrawMovieBloc(
     this._movieRepository,
@@ -62,22 +60,29 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
   }
 
   Future<DrawMovieState> _getRandomMovie() async {
-    final listOfMovie = await _movieRepository.getAllMovies();
-    final listOfLockedMovie = listOfMovie.where((movie) => !movie.isUnlocked);
-    final randomMovie = listOfLockedMovie
-        .elementAt((Random().nextInt((listOfLockedMovie.length))));
+    final listOfLockedMovies = await _movieRepository.getAllMovies()
+      ..where((movie) => !movie.isUnlocked);
+    final randomMovieId = listOfLockedMovies
+        .elementAt((Random().nextInt((listOfLockedMovies.length))))
+        .id;
+    final rejectedListOfMovieId = _sharedPreferences.getListOfRejectedMovies();
 
-    if (rejectedListOfMovie.contains(randomMovie)) return _getRandomMovie();
-
-    if (rejectedListOfMovie.length >= 10) {
-      if (index <= 9) {
-        rejectedListOfMovie.replaceRange(index, index + 1, [randomMovie]);
-        index++;
+    if (listOfLockedMovies.length > 10) {
+      if (rejectedListOfMovieId.contains(randomMovieId)) {
+        return await _getRandomMovie();
+      }
+      if (rejectedListOfMovieId.length >= 10) {
+        rejectedListOfMovieId.removeAt(0);
+        rejectedListOfMovieId.add(randomMovieId);
       } else
-        index = 0;
-    } else
-      rejectedListOfMovie.add(randomMovie);
+        rejectedListOfMovieId.add(randomMovieId);
+    } else {
+      rejectedListOfMovieId.add(randomMovieId);
+    }
+    _sharedPreferences.setListOfRejectedMovies(rejectedListOfMovieId);
+    _sharedPreferences.setCurrentFilmId(randomMovieId);
 
+    return await _drawMovie(randomMovieId);
     _sharedPreferences.setCurrentFilmId(randomMovie.id);
 
   Future<DrawMovieState> _drawNewMovie() async {

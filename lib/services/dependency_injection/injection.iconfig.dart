@@ -4,7 +4,7 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
-import 'package:applaca/bloc/bottom_navigation_bar_bloc/bottom_navigation_bloc.dart';
+import 'package:applaca/bloc/bottom_navigation_bloc/bottom_navigation_bloc.dart';
 import 'package:applaca/bloc/unlock_reward/unlock_reward_bloc.dart';
 import 'package:applaca/database/database.dart';
 import 'package:applaca/database/movie/movie_dao.dart';

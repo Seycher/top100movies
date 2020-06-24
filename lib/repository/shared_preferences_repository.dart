@@ -10,6 +10,7 @@ class SharedPreferencesRepository {
   static const String _isOnboardingCompleted = 'isOnboardingCompleted';
   static const String _currentFilmId = 'currentFilmId';
   static const String _currentFilmDateTime = 'currentFilmDate';
+  static const String _listOfRejectedMovies = 'listOfRejectedMovies';
 
   void setOnboardingCompleted() {
     _prefs.setBool(_isOnboardingCompleted, true);
@@ -40,5 +41,17 @@ class SharedPreferencesRepository {
     } else {
       return DateTime.parse(_prefs.getString(_currentFilmDateTime));
     }
+  }
+
+  void setListOfRejectedMovies(final List<int> listOfRejectedMovies) {
+    _prefs.setStringList(
+      _listOfRejectedMovies,
+      listOfRejectedMovies.map((movieId) => movieId.toString()).toList(),
+    );
+  }
+
+  List<int> getListOfRejectedMovies() {
+    final list = _prefs.getStringList(_listOfRejectedMovies) ?? [];
+    return list.map((movieId) => int.parse(movieId)).toList();
   }
 }

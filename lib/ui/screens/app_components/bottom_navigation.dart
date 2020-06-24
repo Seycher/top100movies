@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:applaca/bloc/bottom_navigation_bar_bloc/bottom_navigation_bloc.dart';
-import 'package:applaca/bloc/bottom_navigation_bar_bloc/bottom_navigation_event.dart';
+import 'package:applaca/bloc/bottom_navigation_bloc/bottom_navigation_bloc.dart';
+import 'package:applaca/bloc/bottom_navigation_bloc/bottom_navigation_event.dart';
 import 'package:applaca/bloc/no_state.dart';
 import 'package:applaca/services/dependency_injection/injection.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ const kListIcon = 18;
 class BottomNavigation extends StatelessWidget {
   final int currentIndex;
 
-  BottomNavigation({this.currentIndex});
+  const BottomNavigation({this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
