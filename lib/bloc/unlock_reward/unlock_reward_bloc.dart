@@ -3,17 +3,17 @@ import 'package:applaca/bloc/unlock_reward/unlock_reward_state.dart';
 import 'package:applaca/ui/screens/list_of_movies/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:injectable/injectable.dart';
+import 'package:scratcher/widgets.dart';
 
-@injectable
 class UnlockRewardBloc extends Bloc<UnlockRewardEvent, UnlockRewardState> {
   final GlobalKey<NavigatorState> _navigator;
   final String rewardURL;
+  final GlobalKey<ScratcherState> scratcherKey;
 
-  UnlockRewardBloc(this._navigator, @Named('rewardURL') this.rewardURL);
+  UnlockRewardBloc(this._navigator, this.rewardURL, this.scratcherKey);
 
   @override
-  UnlockRewardState get initialState => InitialRewardScratcherState();
+  UnlockRewardState get initialState => InitialRewardUnlockerState();
 
   @override
   Stream<UnlockRewardState> mapEventToState(
@@ -22,18 +22,18 @@ class UnlockRewardBloc extends Bloc<UnlockRewardEvent, UnlockRewardState> {
     if (event is ScreenInitializedEvent) {
       yield await _onScreenInitialized();
     } else if (event is RewardUnlockedEvent) {
-      yield await _onRewardScratched();
+      yield await _onRewardUnlocked();
     } else if (event is RewardClaimedEvent) {
       _onRewardClaimed();
     }
   }
 
   Future<UnlockRewardState> _onScreenInitialized() async {
-    return RewardNotScratchedState(rewardURL);
+    return RewardNotUnlockedState(rewardURL, scratcherKey);
   }
 
-  Future<UnlockRewardState> _onRewardScratched() async {
-    return RewardIsUnlockedState(rewardURL);
+  Future<UnlockRewardState> _onRewardUnlocked() async {
+    return RewardIsUnlockedState(rewardURL, scratcherKey);
   }
 
   void _onRewardClaimed() {
