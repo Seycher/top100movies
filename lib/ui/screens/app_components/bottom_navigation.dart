@@ -41,7 +41,7 @@ class BottomNavigation extends StatelessWidget {
                     icon: Icons.local_movies,
                     onPressed: () {
                       return BlocProvider.of<BottomNavigationBloc>(context)
-                          .add(LotteryButtonClickedEvent());
+                          .add(DrawMovieButtonPressedEvent());
                     },
                   ),
                 ),
@@ -74,7 +74,7 @@ class BottomNavigation extends StatelessWidget {
     return IconButton(
       color: currentIndex == index ? Colors.white : Colors.grey[700],
       icon: Icon(icon, size: MediaQuery.of(context).size.height / iconSize),
-      onPressed: onPressed,
+      onPressed: currentIndex == index ? (){} : onPressed,
     );
   }
 }

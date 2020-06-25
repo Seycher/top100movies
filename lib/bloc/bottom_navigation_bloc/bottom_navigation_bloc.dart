@@ -17,7 +17,7 @@ class BottomNavigationBloc extends Bloc<BottomNavigationEvent, NoState> {
 
   @override
   Stream<NoState> mapEventToState(final BottomNavigationEvent event) async* {
-    if (event is LotteryButtonClickedEvent) {
+    if (event is DrawMovieButtonPressedEvent) {
       _onLotteryButtonClicked();
     } else if (event is ListButtonClickedEvent) {
       _onListButtonClicked();
