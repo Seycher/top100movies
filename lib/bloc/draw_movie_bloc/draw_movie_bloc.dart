@@ -60,21 +60,20 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
     final randomMovieId = listOfLockedMovies
         .elementAt((Random().nextInt((listOfLockedMovies.length))))
         .id;
-    final rejectedListOfMovieId = _sharedPreferences.getListOfRejectedMovies();
+    final rejectedListOfMovieId =
+        _sharedPreferences.getListOfRejectedMoviesId();
 
     if (listOfLockedMovies.length > 10) {
       if (rejectedListOfMovieId.contains(randomMovieId)) {
         return await _getRandomMovie();
-      }
-      if (rejectedListOfMovieId.length >= 10) {
+      } else if (rejectedListOfMovieId.length >= 10) {
         rejectedListOfMovieId.removeAt(0);
         rejectedListOfMovieId.add(randomMovieId);
-      } else
+      } else {
         rejectedListOfMovieId.add(randomMovieId);
-    } else {
-      rejectedListOfMovieId.add(randomMovieId);
+      }
     }
-    _sharedPreferences.setListOfRejectedMovies(rejectedListOfMovieId);
+    _sharedPreferences.setListOfRejectedMoviesId(rejectedListOfMovieId);
     _sharedPreferences.setCurrentFilmId(randomMovieId);
 
     return await _drawMovie(randomMovieId);
@@ -113,7 +112,6 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
       year: movie.year,
       category: movie.category,
       director: movie.director,
-      duration: movie.duration,
       plot: movie.plot,
       posterUrl: movie.posterUrl,
       timeLeft: timeLeft,

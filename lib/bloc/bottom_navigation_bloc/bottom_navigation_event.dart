@@ -2,8 +2,8 @@ abstract class BottomNavigationEvent {
   const BottomNavigationEvent();
 }
 
-class LotteryButtonClickedEvent extends BottomNavigationEvent {
-  const LotteryButtonClickedEvent();
+class DrawMovieButtonPressedEvent extends BottomNavigationEvent {
+  const DrawMovieButtonPressedEvent();
 }
 
 class ListButtonClickedEvent extends BottomNavigationEvent {

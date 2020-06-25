@@ -38,14 +38,14 @@ class SharedPreferencesRepository {
         DateTime(1997).toIso8601String());
   }
 
-  void setListOfRejectedMovies(final List<int> listOfRejectedMovies) {
+  void setListOfRejectedMoviesId(final List<int> listOfRejectedMovies) {
     _prefs.setStringList(
       _listOfRejectedMovies,
       listOfRejectedMovies.map((movieId) => movieId.toString()).toList(),
     );
   }
 
-  List<int> getListOfRejectedMovies() {
+  List<int> getListOfRejectedMoviesId() {
     final list = _prefs.getStringList(_listOfRejectedMovies) ?? [];
     return list.map((movieId) => int.parse(movieId)).toList();
   }

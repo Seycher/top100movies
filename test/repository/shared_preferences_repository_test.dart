@@ -8,9 +8,11 @@ class SharedPreferencesMock extends Mock implements SharedPreferences {}
 const String _isOnboardingCompleted = 'isOnboardingCompleted';
 const String _currentFilmId = 'currentFilmId';
 const String _currentFilmDateTime = 'currentFilmDate';
+const String _listOfRejectedMovies = 'listOfRejectedMovies';
 const int filmId = 1;
 final DateTime filmWatchedDateTimeOnError = DateTime(1997);
 final DateTime filmWatchedDateTime = DateTime.now();
+const List<int> _listOfRejectedMoviesId = [1, 2, 3, 4];
 
 SharedPreferencesMock _sharedPreferencesMock;
 SharedPreferencesRepository _sharedPreferencesRepository;
@@ -113,5 +115,40 @@ main() {
     _sharedPreferencesRepository.getCurrentFilmDateTime();
 
     verify(_sharedPreferencesMock.getString(_currentFilmDateTime));
+  });
+
+  test(
+      "setListOfRejectedMoviesId() calls setStringList of SharedPreferences and calls map on listOfRejecetedMovies",
+      () {
+    _sharedPreferencesRepository
+        .setListOfRejectedMoviesId(_listOfRejectedMoviesId);
+
+    verify(_sharedPreferencesMock.setStringList(_listOfRejectedMovies,
+        _listOfRejectedMoviesId.map((movieId) => movieId.toString()).toList()));
+  });
+
+  test("getListOfRejectedMoviesId() calls getStringList of SharedPrefences",
+      () {
+    _sharedPreferencesRepository.getListOfRejectedMoviesId();
+
+    verify(_sharedPreferencesMock.getStringList(_listOfRejectedMovies));
+  });
+
+  test("getListOfRejectedMoviesId() return list of movie id", () {
+    when(_sharedPreferencesMock.getStringList(_listOfRejectedMovies))
+        .thenAnswer(
+            (_) => _listOfRejectedMoviesId.map((id) => id.toString()).toList());
+
+    final result = _sharedPreferencesRepository.getListOfRejectedMoviesId();
+
+    expect(result, _listOfRejectedMoviesId);
+  });
+
+  test(
+      "getListOfRejectedMoviesId() return empty list when there is nothing inside",
+      () {
+    final result = _sharedPreferencesRepository.getListOfRejectedMoviesId();
+
+    expect(result, []);
   });
 }
