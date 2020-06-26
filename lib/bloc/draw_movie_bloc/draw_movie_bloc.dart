@@ -112,6 +112,7 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
       year: movie.year,
       category: movie.category,
       director: movie.director,
+      duration: movie.duration,
       plot: movie.plot,
       posterUrl: movie.posterUrl,
       timeLeft: timeLeft,

@@ -18,17 +18,21 @@ class BottomNavigationBloc extends Bloc<BottomNavigationEvent, NoState> {
   @override
   Stream<NoState> mapEventToState(final BottomNavigationEvent event) async* {
     if (event is DrawMovieButtonPressedEvent) {
-      _onLotteryButtonClicked();
+      _onLotteryButtonClicked(event.currentIndex);
     } else if (event is ListButtonClickedEvent) {
-      _onListButtonClicked();
+      _onListButtonClicked(event.currentIndex);
     }
   }
 
-  void _onLotteryButtonClicked() {
-    _navigator.currentState.pushReplacement(DrawMovieRoute.get());
+  void _onLotteryButtonClicked(final currentIndex) {
+    if (currentIndex == 1) {
+      _navigator.currentState.pushReplacement(DrawMovieRoute.get());
+    }
   }
 
-  void _onListButtonClicked() {
-    _navigator.currentState.pushReplacement(ListOfMoviesRoute.get());
+  void _onListButtonClicked(final currentIndex) {
+    if (currentIndex == 0) {
+      _navigator.currentState.pushReplacement(ListOfMoviesRoute.get());
+    }
   }
 }
