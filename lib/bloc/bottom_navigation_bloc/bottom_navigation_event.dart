@@ -3,9 +3,13 @@ abstract class BottomNavigationEvent {
 }
 
 class DrawMovieButtonPressedEvent extends BottomNavigationEvent {
-  const DrawMovieButtonPressedEvent();
+  final currentIndex;
+
+  const DrawMovieButtonPressedEvent(this.currentIndex);
 }
 
 class ListButtonClickedEvent extends BottomNavigationEvent {
-  const ListButtonClickedEvent();
+  final currentIndex;
+
+  const ListButtonClickedEvent(this.currentIndex);
 }

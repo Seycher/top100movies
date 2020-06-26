@@ -7,9 +7,9 @@ import 'package:applaca/services/dependency_injection/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-const kBarH = 9.5;
-const kLotteryIcon = 21;
-const kListIcon = 18;
+const kBarH = 0.1;
+const kLotteryIcon = 0.05;
+const kListIcon = 0.058;
 
 class BottomNavigation extends StatelessWidget {
   final int currentIndex;
@@ -27,7 +27,7 @@ class BottomNavigation extends StatelessWidget {
       child: BlocBuilder<BottomNavigationBloc, NoState>(
         builder: (context, state) {
           return Container(
-            height: MediaQuery.of(context).size.height / kBarH,
+            height: MediaQuery.of(context).size.height * kBarH,
             color: Colors.grey[900],
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -41,7 +41,7 @@ class BottomNavigation extends StatelessWidget {
                     icon: Icons.local_movies,
                     onPressed: () {
                       return BlocProvider.of<BottomNavigationBloc>(context)
-                          .add(DrawMovieButtonPressedEvent());
+                          .add(DrawMovieButtonPressedEvent(currentIndex));
                     },
                   ),
                 ),
@@ -53,7 +53,7 @@ class BottomNavigation extends StatelessWidget {
                   icon: Icons.list,
                   onPressed: () {
                     return BlocProvider.of<BottomNavigationBloc>(context)
-                        .add(ListButtonClickedEvent());
+                        .add(ListButtonClickedEvent(currentIndex));
                   },
                 ),
               ],
@@ -73,8 +73,8 @@ class BottomNavigation extends StatelessWidget {
   }) {
     return IconButton(
       color: currentIndex == index ? Colors.white : Colors.grey[700],
-      icon: Icon(icon, size: MediaQuery.of(context).size.height / iconSize),
-      onPressed: currentIndex == index ? (){} : onPressed,
+      icon: Icon(icon, size: MediaQuery.of(context).size.height * iconSize),
+      onPressed: onPressed,
     );
   }
 }
