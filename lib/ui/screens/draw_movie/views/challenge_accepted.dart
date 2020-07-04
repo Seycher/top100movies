@@ -4,7 +4,7 @@ import 'package:applaca/bloc/draw_movie_bloc/draw_movie_state.dart';
 import 'package:applaca/services/internationalization/app_localizations.dart';
 import 'package:applaca/services/internationalization/localized_strings.dart';
 import 'package:applaca/ui/common/constants/text_styles.dart';
-import 'package:applaca/ui/screens/app_components/bottom_navigation_bar.dart';
+import 'package:applaca/ui/screens/app_components/bottom_navigation.dart';
 import 'package:applaca/ui/screens/app_components/button.dart';
 import 'package:applaca/ui/screens/app_components/responsive_scaffold.dart';
 import 'package:applaca/ui/screens/draw_movie/components/challenge_message.dart';
@@ -60,7 +60,7 @@ Widget buildChallengeAcceptedView(
         ),
       );
     },
-    bottomNavigationBar: BottomNavigation(0),
+    bottomNavigationBar: BottomNavigation(currentIndex: 0),
   );
 }
 

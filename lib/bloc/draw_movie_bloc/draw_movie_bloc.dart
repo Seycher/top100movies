@@ -31,7 +31,7 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
     if (event is SelectTheInitialState) {
       yield await _selectInitialState();
     } else if (event is ShuffleButtonPressedEvent) {
-      yield await _drawMovie();
+      yield await _drawNewMovie();
     } else if (event is ChallengeAcceptedButtonPressedEvent) {
       yield await _acceptChallenge();
     } else if (event is DrawAgainButtonPressedEvent) {
@@ -53,30 +53,35 @@ class DrawMovieBloc extends Bloc<DrawMovieEvent, DrawMovieState> {
     if (movieId == null) {
       return DrawMovieHomeState();
     } else if (movieData == null) {
-      return await _drawMovie();
+      return await _drawPreviousMovie(_sharedPreferences.getCurrentFilmId());
     } else {
       return await _acceptChallenge();
     }
   }
 
-  Future<DrawMovieState> _drawMovie() async {
-    final movieId = _sharedPreferences.getCurrentFilmId();
-
-    if (movieId == null) {
-      return await _drawNewMovie();
-    } else {
-      return await _drawPreviousMovie(movieId);
-    }
-  }
-
   Future<DrawMovieState> _drawNewMovie() async {
-    //TODO write a drawing algorithm
+    final listOfLockedMovies = await _movieRepository.getAllMovies()
+      ..where((movie) => !movie.isUnlocked);
+    final randomMovieId = listOfLockedMovies
+        .elementAt((Random().nextInt((listOfLockedMovies.length))))
+        .id;
+    final rejectedListOfMovieId =
+    _sharedPreferences.getListOfRejectedMoviesId();
 
-    final id = Random().nextInt(4) + 1;
+    if (listOfLockedMovies.length > 10) {
+      if (rejectedListOfMovieId.contains(randomMovieId)) {
+        return await _drawNewMovie();
+      } else if (rejectedListOfMovieId.length >= 10) {
+        rejectedListOfMovieId.removeAt(0);
+        rejectedListOfMovieId.add(randomMovieId);
+      } else {
+        rejectedListOfMovieId.add(randomMovieId);
+      }
+    }
+    _sharedPreferences.setListOfRejectedMoviesId(rejectedListOfMovieId);
+    _sharedPreferences.setCurrentFilmId(randomMovieId);
 
-    _sharedPreferences.setCurrentFilmId(id);
-
-    return await _drawPreviousMovie(id);
+    return await _drawPreviousMovie(randomMovieId);
   }
 
   Future<DrawMovieState> _drawPreviousMovie(final int id) async {
