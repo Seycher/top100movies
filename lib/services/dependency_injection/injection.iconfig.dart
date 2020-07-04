@@ -14,6 +14,7 @@ import 'package:applaca/services/internationalization/app_localizations_delegate
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/navigator.dart';
 import 'package:get_it/get_it.dart';
+import 'package:scratcher/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void $initGetIt(GetIt g, {String environment}) {
@@ -26,7 +27,9 @@ void $initGetIt(GetIt g, {String environment}) {
   g.registerLazySingleton<SharedPreferencesRepository>(
       () => SharedPreferencesRepository(g<SharedPreferences>()));
   g.registerFactory<UnlockRewardBloc>(() => UnlockRewardBloc(
-      g<GlobalKey<NavigatorState>>(), g<String>(instanceName: 'rewardURL')));
+      g<GlobalKey<NavigatorState>>(),
+      g<String>(instanceName: 'rewardURL'),
+      g<GlobalKey<ScratcherState>>()));
   g.registerFactory<BottomNavigationBloc>(
       () => BottomNavigationBloc(g<GlobalKey<NavigatorState>>()));
 }
