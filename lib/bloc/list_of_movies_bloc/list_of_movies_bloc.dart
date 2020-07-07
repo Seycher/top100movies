@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:applaca/repository/movie.dart';
+import 'package:applaca/repository/model/movie.dart';
 import 'package:applaca/repository/movie_repository.dart';
 import 'package:applaca/repository/shared_preferences_repository.dart';
 import 'package:applaca/ui/screens/reward/navigation.dart';
@@ -41,9 +41,6 @@ class ListOfMoviesBloc extends Bloc<ListOfMoviesEvent, ListOfMoviesState> {
     _movieRepository.watchAllMoviesData().listen((listOfMovies) {
       this.add(DataReceivedEvent(listOfMovies));
     });
-    // debug
-    await _debugAddValuesToDatabase();
-    // debug
   }
 
   Future<ListOfMoviesState> _onMoviesRequested(
@@ -69,38 +66,5 @@ class ListOfMoviesBloc extends Bloc<ListOfMoviesEvent, ListOfMoviesState> {
 
   void _onMovieClicked(final MovieClickedEvent event) {
     _navigator.currentState.push(RewardRoute.get(event.title));
-  }
-
-  Future _debugAddValuesToDatabase() async {
-    await Future.delayed(const Duration(seconds: 3));
-    final movies = await _movieRepository.getAllMovies();
-    if (movies != null) {
-      if (movies.length == 0) {
-        for (int i = 0; i <= 50; i++) {
-          await _movieRepository.addMovie(
-            "Pulp Fiction $i",
-            1994,
-            "Gangsterski",
-            "Quentin Tarantino",
-            154,
-            "Przemoc i odkupienie w opowieści o dwóch płatnych mordercach pracujących na zlecenie mafii, żonie gangstera, bokserze i parze okradającej ludzi w restauracji.",
-            'Ponieważ musisz go obejrzeć i już!',
-            "https://i.ytimg.com/vi/XOcYnJGYqU8/maxresdefault.jpg",
-            'https://i.pinimg.com/236x/6a/df/47/6adf47f699905fff05f17550115bd47c--pulp-fiction-poster-pulp-fiction-illustration.jpg',
-          );
-          await _movieRepository.addMovie(
-            "Forrest Gump $i",
-            1994,
-            "Dramat / Komedia",
-            "Robert Zemeckis",
-            142,
-            "Historia życia Forresta, chłopca o niskim ilorazie inteligencji z niedowładem kończyn, który staje się miliarderem i bohaterem wojny w Wietnamie.",
-            'Ten z mężczyzną z czekladkami na ławczesce oraz cytatem Run Forest, run!',
-            "https://fwcdn.pl/fpo/09/98/998/7314731.3.jpg",
-            'https://i.pinimg.com/originals/0b/a7/00/0ba70078291e93a138d5c5e722f9698c.jpg',
-          );
-        }
-      }
-    }
   }
 }

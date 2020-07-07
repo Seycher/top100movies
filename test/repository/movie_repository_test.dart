@@ -1,7 +1,9 @@
 import 'package:applaca/database/database.dart';
 import 'package:applaca/database/movie/movie_dao.dart';
-import 'package:applaca/repository/movie.dart';
+import 'package:applaca/networking/firestore_client.dart';
+import 'package:applaca/repository/model/movie.dart';
 import 'package:applaca/repository/movie_repository.dart';
+import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:moor/moor.dart';
@@ -10,6 +12,8 @@ class MovieDaoMock extends Mock implements MovieDao {}
 
 MovieRepository _repository;
 MovieDaoMock _movieDao;
+MockFirestoreInstance _firestoreMock;
+FirestoreClient _firestoreClient;
 
 const int id = 1;
 const String movieTitle = 'title';
@@ -21,7 +25,7 @@ const String plot = '';
 const String encouragement = '';
 const bool isUnlocked = false;
 const String posterUrl = '';
-const String rewordUrl = '';
+const String rewardUrl = '';
 
 final moorMovie = MoorMovie(
   id: id,
@@ -34,7 +38,7 @@ final moorMovie = MoorMovie(
   encouragement: encouragement,
   isUnlocked: isUnlocked,
   posterUrl: posterUrl,
-  rewordUrl: rewordUrl,
+  rewordUrl: rewardUrl,
 );
 
 final listOfMoorMovies = [moorMovie, moorMovie];
@@ -50,13 +54,14 @@ final moorMovieCompanion = MoorMoviesCompanion(
   plot: Value(plot),
   encouragement: Value(encouragement),
   posterUrl: Value(posterUrl),
-  rewordUrl: Value(rewordUrl),
+  rewordUrl: Value(rewardUrl),
 );
 
 main() {
   setUp(() {
     _movieDao = MovieDaoMock();
-    _repository = MovieRepository(_movieDao);
+    _firestoreMock = MockFirestoreInstance();
+    _firestoreClient = FirestoreClient();
 
     when(_movieDao.getMovieByTitle(movieTitle))
         .thenAnswer((_) => Future.value(moorMovie));
@@ -68,7 +73,10 @@ main() {
 
     when(_movieDao.watchAllMovies())
         .thenAnswer((_) => Stream.fromIterable(listOfListOfMoviesToEmit));
+
+    _repository = MovieRepository(_movieDao, _firestoreClient);
   });
+
   test(
       'watchAllMoviesData() emits list of MappedMovies after first listen call',
       () {
@@ -123,7 +131,9 @@ main() {
   });
 
   test('addMovie() calls insertMovie on Dao', () async {
-    when(_movieDao.insertMovie(moorMovieCompanion)).thenAnswer((_) => null);
+    when(_movieDao.insertMovie(moorMovieCompanion)).thenAnswer(
+      (_) => null,
+    );
     await _repository.addMovie(
       movieTitle,
       year,
@@ -133,7 +143,7 @@ main() {
       plot,
       encouragement,
       posterUrl,
-      rewordUrl,
+      rewardUrl,
     );
 
     verify(_movieDao.insertMovie(moorMovieCompanion));

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "623246734737",
+    "firebase_url": "https://applaca-test.firebaseio.com",
+    "project_id": "applaca-test",
+    "storage_bucket": "applaca-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623246734737:android:70413dca319c29d23f5630",
+        "android_client_info": {
+          "package_name": "mikroprodukt.team.applaca"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "623246734737-mslt3ace6mig06dio07td5v7n9aqjs44.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW5ctT42BsZNJiPghhOHA0CzyGsAT66pE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "623246734737-mslt3ace6mig06dio07td5v7n9aqjs44.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

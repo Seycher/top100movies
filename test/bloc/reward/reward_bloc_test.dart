@@ -1,7 +1,8 @@
 import 'package:applaca/bloc/reward/reward_bloc.dart';
 import 'package:applaca/bloc/reward/reward_event.dart';
 import 'package:applaca/bloc/reward/reward_state.dart';
-import 'package:applaca/repository/movie.dart';
+import 'package:applaca/repository/model/movie.dart';
+
 import 'package:applaca/repository/movie_repository.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
