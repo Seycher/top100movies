@@ -1,4 +1,4 @@
-import 'package:applaca/repository/movie.dart';
+import 'package:applaca/repository/model/movie.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 

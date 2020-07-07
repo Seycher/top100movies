@@ -1,7 +1,7 @@
 import 'package:applaca/bloc/draw_movie_bloc/draw_movie_bloc.dart';
 import 'package:applaca/bloc/draw_movie_bloc/draw_movie_event.dart';
 import 'package:applaca/bloc/draw_movie_bloc/draw_movie_state.dart';
-import 'package:applaca/repository/movie.dart';
+import 'package:applaca/repository/model/movie.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
